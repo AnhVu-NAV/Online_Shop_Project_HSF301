@@ -48,13 +48,12 @@ public class User {
     @Column(name = "banned")
     private Boolean banned;
 
-    private String fullname;
     private int role_id;
 
     public User(String username, String password, String fullname, String email, String phone, String address, int role_id) {
         this.username = username;
         this.password = password;
-        this.fullname = fullname;
+        this.fullName = fullname;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -65,7 +64,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.fullname = fullname;
+        this.fullName = fullname;
         this.email = email;
         this.phone = phone;
         this.address = address;
