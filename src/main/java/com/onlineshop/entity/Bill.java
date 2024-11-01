@@ -1,8 +1,6 @@
 package com.onlineshop.entity;
 
-import java.sql.Date;
 import java.time.LocalDate;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +38,4 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
-    // Getters and Setters
 }
-

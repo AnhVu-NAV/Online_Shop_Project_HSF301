@@ -6,7 +6,7 @@ import lombok.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class Order {
     private int id;
 
     @Column(name = "created_date")
-    private Date created_date;
+    private Date createdDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -31,14 +31,8 @@ public class Order {
     private String status; // Thuộc tính không được lưu trong DB
 
     // Custom constructors
-    public Order(Date created_date, User user) {
-        this.created_date = created_date;
-        this.user = user;
-    }
-
-    public Order(int id, Date created_date, User user) {
-        this.id = id;
-        this.created_date = created_date;
+    public Order(Date createdDate, User user) {
+        this.createdDate = createdDate;
         this.user = user;
     }
 }

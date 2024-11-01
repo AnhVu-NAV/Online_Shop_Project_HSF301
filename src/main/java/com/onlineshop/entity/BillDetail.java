@@ -13,8 +13,7 @@ import lombok.*;
 @ToString
 public class BillDetail {
     private int id, productQuantity;
-    private String customerName, productName, image_url;
-    private Date created_date;
+    private String customerName, productName, imageUrl;
+    private Date createdDate;
     private double price, subTotal;
-
 }

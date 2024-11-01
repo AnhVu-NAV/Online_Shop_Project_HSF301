@@ -1,3 +1,4 @@
+
 package com.onlineshop.entity;
 
 import jakarta.persistence.*;
@@ -19,6 +20,4 @@ public class Role {
 
     @Column(name = "name")
     private String name;
-
-    // Getters and Setters
 }

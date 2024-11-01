@@ -37,6 +37,4 @@ public class OrderDetail {
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
-
-    private String image_url;
 }

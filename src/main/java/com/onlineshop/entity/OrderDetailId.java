@@ -21,7 +21,4 @@ public class OrderDetailId implements Serializable {
 
     @Column(name = "order_id")
     private Integer orderId;
-
-    // Constructors, equals, and hashCode
 }
-

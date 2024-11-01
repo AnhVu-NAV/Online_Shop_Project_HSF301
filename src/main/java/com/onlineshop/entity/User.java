@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,26 +48,13 @@ public class User {
     @Column(name = "banned")
     private Boolean banned;
 
-    private int role_id;
-
-    public User(String username, String password, String fullname, String email, String phone, String address, int role_id) {
+    public User(String username, String password, String fullname, String email, String phone, String address, Role role) {
         this.username = username;
         this.password = password;
         this.fullName = fullname;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.role_id = role_id;
-    }
-
-    public User(int id, String username, String password, String fullname, String email, String phone, String address, int role_id) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullname;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.role_id = role_id;
+        this.role = role;
     }
 }

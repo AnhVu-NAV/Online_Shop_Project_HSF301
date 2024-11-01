@@ -48,18 +48,14 @@ public class Product {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    private int brand_id;
-    private String image_url;
-    private Date release_date;
-
-    //constructor for insert a new product
-    public Product(int quantity, int brand_id, String name, String description, String image_url, double price, Date release_date) {
+    // Constructor for inserting a new product
+    public Product(int quantity, Brand brand, String name, String description, String imageUrl, double price, LocalDate releaseDate) {
         this.quantity = quantity;
-        this.brand_id = brand_id;
+        this.brand = brand;
         this.name = name;
         this.description = description;
-        this.image_url = image_url;
+        this.imageUrl = imageUrl;
         this.price = price;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
     }
 }

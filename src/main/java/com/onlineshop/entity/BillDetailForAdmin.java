@@ -19,7 +19,7 @@ import lombok.ToString;
 public class BillDetailForAdmin {
     private int id;
     private String customerName;
-    private Date created_date;
+    private Date createdDate;
     private String address;
     private String email;
     private String phone;
