@@ -1,6 +1,9 @@
 package com.onlineshop.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +19,37 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "product")
 public class Product {
-    private int id, quantity, brand_id;
-    private String name, description, image_url;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    private Brand brand;
+
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
+
+    private int brand_id;
+    private String image_url;
     private Date release_date;
 
     //constructor for insert a new product

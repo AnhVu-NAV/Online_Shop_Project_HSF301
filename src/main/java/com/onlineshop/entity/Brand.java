@@ -1,5 +1,6 @@
 package com.onlineshop.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +16,20 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "brand")
 public class Brand {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "name")
     private String name;
 
-    //constructor for insert a new brand
     public Brand(String name) {
         this.name = name;
     }
+    // Getters and Setters
 }
+
