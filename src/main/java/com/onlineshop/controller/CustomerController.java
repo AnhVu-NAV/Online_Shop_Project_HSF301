@@ -35,14 +35,21 @@ public class CustomerController {
                                 @RequestParam(name = "filterByPrice", required = false) String filterByPrice,
                                 @RequestParam(name = "filterByBrand", required = false) String filterByBrand,
                                 @RequestParam(name = "productId", required = false) Integer productId,
-
                                 Model model,
                                 HttpSession session) {
 
+        // Initialize cart count if not present
         if (session.getAttribute("numberProductsInCart") == null) {
             session.setAttribute("numberProductsInCart", 0);
         }
 
+        // Add user to model if logged in
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+
+        // Get all brands for the sidebar
         List<Brand> brands = brandDAO.getAll();
         model.addAttribute("allBrands", brands);
 
@@ -54,52 +61,52 @@ public class CustomerController {
             case "listAllProducts":
                 List<Product> products = productDAO.getAll();
                 model.addAttribute("allProducts", products);
-                return "index";
+                break;
 
             case "viewOrders":
-                User user = (User) session.getAttribute("user");
                 if (user != null) {
                     List<Order> orders = orderDAO.getOrdersByUserId(user.getId());
                     model.addAttribute("orders", orders);
+                    return "orderHistory";
                 }
-                return "orderHistory";
+                break;
 
             case "viewProductDetail":
                 if (productId != null) {
                     Product product = productDAO.getProductById(productId);
                     model.addAttribute("product", product);
+                    return "productDetail";
                 }
-                return "productDetail";
+                break;
 
             case "searchByKeywords":
-                if (keywords == null) {
-                    keywords = "";
-                }
-                if (filterByPrice == null) {
-                    filterByPrice = "price-all";
-                }
-                if (filterByBrand == null) {
-                    filterByBrand = "brand-all";
-                }
+                keywords = (keywords == null) ? "" : keywords;
+                filterByPrice = (filterByPrice == null) ? "price-all" : filterByPrice;
+                filterByBrand = (filterByBrand == null) ? "brand-all" : filterByBrand;
 
                 List<Product> productsFiltered = productDAO.getProductsByKeywords(keywords);
                 productsFiltered = productDAO.filterByPrice(filterByPrice, productsFiltered);
                 productsFiltered = productDAO.filterByBrand(filterByBrand, productsFiltered);
 
-                model.addAttribute("keywords", keywords);
-                model.addAttribute("filterByPrice", filterByPrice);
-                model.addAttribute("filterByBrand", filterByBrand);
-
                 if (sortBy != null && !sortBy.equals("unsorted")) {
                     productsFiltered = productDAO.sortProducts(productsFiltered, sortBy);
-                    model.addAttribute("sortBy", sortBy);
                 }
 
                 model.addAttribute("allProducts", productsFiltered);
-                return "index";
+                model.addAttribute("keywords", keywords);
+                model.addAttribute("filterByPrice", filterByPrice);
+                model.addAttribute("filterByBrand", filterByBrand);
+                model.addAttribute("sortBy", sortBy);
+                break;
 
             default:
                 return "redirect:/customer";
         }
+
+        // Add common attributes
+        model.addAttribute("service", service);
+
+        // Return the main Thymeleaf template
+        return "index";
     }
 }
