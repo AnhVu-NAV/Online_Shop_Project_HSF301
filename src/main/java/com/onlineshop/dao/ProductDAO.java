@@ -2,7 +2,7 @@ package com.onlineshop.dao;
 
 import com.onlineshop.entity.Product;
 import java.util.List;
-
+//
 public interface ProductDAO {
     List<Product> getAll();
     Product getProductById(int productId);

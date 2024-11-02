@@ -31,7 +31,7 @@ public class ManageBillController {
     }
 
 
-    // Change Status of a Bill
+    // Change Status of the Bill
     @GetMapping("/changeStatus")
     public String changeBillStatus(@RequestParam("billId") int billId,
                                    @RequestParam("newStatus") String newStatus,

@@ -44,7 +44,7 @@ public class ProductManagerController {
         return "ProductManager";
     }
 
-    // Request Update Product - Redirect to Update Form
+    // Request Update Product - Redirect to Update
     @GetMapping("/requestUpdate")
     public String requestUpdate(@RequestParam("productId") Integer productId, Model model) {
         Product product = productService.getProductById(productId);

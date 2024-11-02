@@ -1,7 +1,7 @@
 package com.onlineshop.dto;
 
 import java.time.LocalDate;
-
+//
 public class BillDetailDTO {
     private int billId;
     private String customerName;

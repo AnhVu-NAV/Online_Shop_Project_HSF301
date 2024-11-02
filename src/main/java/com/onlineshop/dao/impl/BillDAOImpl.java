@@ -124,7 +124,7 @@ public class BillDAOImpl implements BillDAO {
     public List<BillDetailForAdmin> getBillDetailForAdminByStatus(String status) {
         Session session = sessionFactory.getCurrentSession();
 
-        // Native SQL query to select the relevant data filtered by status
+        // Native SQL query to select the relevant data filtered by statuses
         String sql = "SELECT b.id, u.fullname as customerName, b.created_date, u.address, u.email, u.phone, " +
                 "SUM(od.product_quantity * p.price) as total, b.status " +
                 "FROM bill b " +

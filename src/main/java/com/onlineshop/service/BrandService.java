@@ -9,4 +9,4 @@ public interface BrandService {
     Brand getBrandById(int brandId);
     void saveBrand(Brand brand);
     void deleteBrand(int brandId);
-}
+}//

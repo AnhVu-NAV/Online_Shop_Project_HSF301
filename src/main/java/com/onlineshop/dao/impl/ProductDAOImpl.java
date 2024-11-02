@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 
-// ProductDAO Implementation
+// ProductDAO Implementations
 @Repository
 @Transactional
 public class ProductDAOImpl implements ProductDAO {
