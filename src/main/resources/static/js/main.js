@@ -28,7 +28,7 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -146,7 +146,7 @@ function filter(value) {
             filterByBrand = "brand-all";
         }
         window.location.href = "customer?service=" + service + "&keywords=" + keywords
-                + "&sortBy=" + sortOption + "&filterByBrand=" + filterByBrand + "&filterByPrice=" + value;
+            + "&sortBy=" + sortOption + "&filterByBrand=" + filterByBrand + "&filterByPrice=" + value;
     }
 
     if (value.toString().includes("brand")) {
@@ -154,7 +154,7 @@ function filter(value) {
             filterByPrice = "price-all";
         }
         window.location.href = "customer?service=" + service + "&keywords=" + keywords
-                + "&sortBy=" + sortOption + "&filterByBrand=" + value + "&filterByPrice=" + filterByPrice;
+            + "&sortBy=" + sortOption + "&filterByBrand=" + value + "&filterByPrice=" + filterByPrice;
     }
 
 }
