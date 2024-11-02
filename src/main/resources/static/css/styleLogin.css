@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ececec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 10px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px; /* Giảm chiều rộng tối đa của container */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+    min-height: 550px; /* Giảm chiều cao tối thiểu */
+    flex-direction: row;
+}
+
+.login-box {
+    display: flex;
+    width: 100%;
+}
+
+.login-left, .login-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-left {
+    background-color: #1d9bf0;
+    color: white;
+    text-align: center;
+    padding: 30px 40px; /* Giảm padding để có thêm không gian */
+}
+
+.login-left .featured-image img {
+    width: 100%;
+    max-width: 250px; /* Giảm kích thước tối đa của hình ảnh */
+    margin-bottom: 20px;
+}
+
+.login-left .title {
+    font-size: 22px; /* Giảm kích thước chữ */
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.login-left .subtitle {
+    font-size: 14px; /* Giảm kích thước chữ */
+}
+
+.login-right {
+    padding: 30px 40px; /* Giảm padding để có thêm không gian */
+}
+
+.login-right h2 {
+    font-size: 22px; /* Giảm kích thước chữ */
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.login-right p {
+    font-size: 13px; /* Giảm kích thước chữ */
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.input-field {
+    width: 100%;
+    padding: 13px; /* Giảm padding bên trong input */
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px; /* Giảm kích thước chữ */
+    outline: none;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 13px; /* Giảm kích thước chữ */
+    color: #666;
+}
+
+.remember-forgot a {
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 13px; /* Giảm padding của nút */
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; /* Giảm kích thước chữ */
+    cursor: pointer;
+    margin-bottom: 18px;
+    outline: none;
+}
+
+.btn-login:hover {
+    background-color: #1a87ce;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 11px; /* Giảm padding của nút */
+    background-color: #ffffff;
+    color: #666;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px; /* Giảm kích thước chữ */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+}
+
+.btn-google:hover {
+    background-color: #f3f4f6;
+}
+
+.signup {
+    text-align: center;
+    color: #666;
+    margin-top: 18px; /* Giảm khoảng cách từ nút đến phần đăng ký */
+}
+
+.signup a {
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        min-height: auto; /* Loại bỏ chiều cao tối thiểu */
+    }
+
+    .login-left, .login-right {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .login-left .featured-image img {
+        max-width: 200px; /* Giảm kích thước hình ảnh trên màn hình nhỏ */
+    }
+
+    .input-field {
+        font-size: 14px; /* Giảm kích thước chữ */
+        padding: 12px; /* Giảm padding trong input */
+    }
+
+    .btn-login, .btn-back-home, .btn-google {
+        font-size: 15px; /* Giảm kích thước chữ của các nút */
+        padding: 12px; /* Giảm padding của các nút */
+    }
+
+    .login-right h2 {
+        font-size: 20px; /* Giảm kích thước chữ của tiêu đề */
+    }
+}
+
+/* CSS cho nút Back to Home */
+.btn-back-home {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 13px; /* Giảm padding của nút */
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; /* Giảm kích thước chữ */
+    cursor: pointer;
+    text-decoration: none; /* Loại bỏ gạch chân */
+    margin-bottom: 18px;
+}
+
+.btn-back-home:hover {
+    background-color: #d32f2f;
+}
+
+.input-group-horizontal {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /*margin-bottom: 20px;  Tạo khoảng cách dưới nhóm ô nhập */
+}
+
+.half-width {
+    width: 48%; /* Chia đôi chiều rộng của mỗi ô nhập liệu */
+    padding: 13px; /* Đồng bộ padding với các ô nhập khác */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px; /* Đồng bộ font-size với các ô nhập khác */
+    outline: none;
+}
