@@ -57,7 +57,7 @@ public class ManageBillController {
             }
             model.addAttribute("changeStatus", statusMessage);
         }
-        return "redirect:/manageBill/listAll";
+        return "redirect:/manageBill/listAllBills";
     }
 
     // Filter Bills by Status

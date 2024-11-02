@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,27 +126,31 @@ public class BillDAOImpl implements BillDAO {
 
         // Native SQL query to select the relevant data filtered by status
         String sql = "SELECT b.id, u.fullname as customerName, b.created_date, u.address, u.email, u.phone, " +
-                "SUM(od.price * od.product_quantity) as total, b.status " +
+                "SUM(od.product_quantity * p.price) as total, b.status " +
                 "FROM bill b " +
                 "JOIN order_detail od ON od.order_id = b.order_id " +
+                "JOIN product p ON p.id = od.product_id " +
                 "JOIN users u ON u.id = b.user_id " +
-                "WHERE b.status = :status"+
+                "WHERE b.status = :status " +
                 "GROUP BY b.id, u.fullname, b.created_date, u.address, u.email, u.phone, b.status";
 
-
-        List<Object[]> rows = session.createNativeQuery(sql).setParameter("status", status).getResultList();
+        List<Object[]> rows = session.createNativeQuery(sql)
+                .setParameter("status", status)
+                .getResultList();
 
         // Manually map the results to BillDetailForAdmin DTOs
         return rows.stream().map(row -> {
             BillDetailForAdmin billDetail = new BillDetailForAdmin();
             billDetail.setId((Integer) row[0]);
             billDetail.setCustomerName((String) row[1]);
-            billDetail.setCreatedDate((java.sql.Date) row[2]);
+            billDetail.setCreatedDate(Date.valueOf(((Date) row[2]).toLocalDate())); // Converting SQL Date to LocalDate
             billDetail.setAddress((String) row[3]);
             billDetail.setEmail((String) row[4]);
             billDetail.setPhone((String) row[5]);
-            billDetail.setStatus((String) row[6]);
+            billDetail.setTotal((Double) row[6]); // Adding total setter
+            billDetail.setStatus((String) row[7]);
             return billDetail;
         }).collect(Collectors.toList());
     }
+
 }
