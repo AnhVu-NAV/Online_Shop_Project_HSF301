@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Builder
 @Data
@@ -46,6 +47,7 @@ public class Product {
     private Brand brand;
 
     @Column(name = "release_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     // Constructor for inserting a new product
@@ -57,5 +59,9 @@ public class Product {
         this.imageUrl = imageUrl;
         this.price = price;
         this.releaseDate = releaseDate;
+    }
+
+    public boolean isAssociatedWithOrder() {
+        return false;
     }
 }

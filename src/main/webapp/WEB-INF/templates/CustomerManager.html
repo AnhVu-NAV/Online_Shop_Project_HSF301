@@ -11,8 +11,7 @@
     <h1 class="text-center mt-5">Customers Manager</h1>
 
     <!-- Search customer by name -->
-    <form action="/manageCustomer" method="get" class="form-inline mb-4">
-        <input type="hidden" name="service" value="searchByKeywords">
+    <form th:action="@{/manageCustomer/searchByKeywords}" method="get" class="form-inline mb-4">
         <div class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control" name="keywords" placeholder="Search by name">
         </div>
@@ -38,14 +37,14 @@
             <tr th:each="customer : ${allCustomers}">
                 <td th:text="${customer.id}"></td>
                 <td th:text="${customer.username}"></td>
-                <td th:text="${customer.fullname}"></td>
+                <td th:text="${customer.fullName}"></td>
                 <td th:text="${customer.email}"></td>
                 <td th:text="${customer.phone}"></td>
                 <td th:text="${customer.address}"></td>
                 <td th:text="${customer.banned ? 'Yes' : 'No'}"></td>
                 <td>
-                    <a th:if="${customer.banned}" th:href="@{/manageCustomer(service='unban', id=${customer.id})}" class="btn btn-success">Unban</a>
-                    <a th:if="${!customer.banned}" th:href="@{/manageCustomer(service='ban', id=${customer.id})}" class="btn btn-danger">Ban</a>
+                    <a th:if="${customer.banned}" th:href="@{/manageCustomer/unban(id=${customer.id})}" class="btn btn-success">Unban</a>
+                    <a th:if="${!customer.banned}" th:href="@{/manageCustomer/ban(id=${customer.id})}" class="btn btn-danger">Ban</a>
                 </td>
             </tr>
             </tbody>
@@ -53,9 +52,7 @@
     </div>
 </div>
 
-<!-- Correcting and completing script tags -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 </html>
