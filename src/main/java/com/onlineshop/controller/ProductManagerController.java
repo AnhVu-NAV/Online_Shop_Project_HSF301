@@ -1,4 +1,3 @@
-// Import Statements
 package com.onlineshop.controller;
 
 import com.onlineshop.entity.Product;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.List;
 
-// Class Definition
 @Controller
 @RequestMapping("/manageProduct")
 public class ProductManagerController {
@@ -46,7 +44,7 @@ public class ProductManagerController {
         return "ProductManager";
     }
 
-    // Request Update Product
+    // Request Update Product - Redirect to Update Form
     @GetMapping("/requestUpdate")
     public String requestUpdate(@RequestParam("productId") Integer productId, Model model) {
         Product product = productService.getProductById(productId);
@@ -55,9 +53,10 @@ public class ProductManagerController {
             return "errorPage";  // Replace "errorPage" with your error view name
         }
         model.addAttribute("productUpdate", product);
-        return "ProductManager";
+        List<Brand> brands = productService.getAllBrands();
+        model.addAttribute("allBrands", brands);
+        return "updateProduct"; // Redirecting to updateProduct.html
     }
-
 
     // Send Update Product Details
     @GetMapping("/sendUpdateDetail")
@@ -72,14 +71,12 @@ public class ProductManagerController {
         return "redirect:/manageProduct/listAllProducts";
     }
 
-
-    // Request Insert New Product
+    // Request Insert New Product - Redirect to Insert Form
     @GetMapping("/requestInsert")
     public String requestInsert(Model model) {
         List<Brand> brands = productService.getAllBrands();
-        model.addAttribute("insertProduct", "insertProduct");
         model.addAttribute("allBrands", brands);
-        return "ProductManager";
+        return "insertProduct"; // Redirecting to insertProduct.html
     }
 
     // Send Insert Product Details
