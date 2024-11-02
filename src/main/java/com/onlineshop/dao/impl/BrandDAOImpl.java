@@ -8,9 +8,13 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class BrandDAOImpl implements BrandDAO {
 
     @Autowired
@@ -22,6 +26,8 @@ public class BrandDAOImpl implements BrandDAO {
         Query<Brand> query = session.createQuery("from Brand", Brand.class);
         return query.getResultList();
     }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Brand getBrandById(int brandId) {
@@ -34,6 +40,9 @@ public class BrandDAOImpl implements BrandDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(brand);
     }
+    public List<Brand> getAll() {
+        return entityManager.createQuery("FROM Brand", Brand.class).getResultList();
+    }
 
     @Override
     public void deleteBrand(int brandId) {
@@ -44,3 +53,4 @@ public class BrandDAOImpl implements BrandDAO {
         }
     }
 }
+
