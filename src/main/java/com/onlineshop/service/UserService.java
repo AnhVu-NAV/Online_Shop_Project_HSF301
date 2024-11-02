@@ -11,4 +11,5 @@ public interface UserService {
     User getUserByUsernameAndPassword(String username, String password);
     boolean isUsernameTaken(String username);
     void insertUser(User user);
+
 }

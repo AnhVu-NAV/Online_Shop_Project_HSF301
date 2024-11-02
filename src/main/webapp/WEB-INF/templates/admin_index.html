@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VShopper - Admin</title>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/panner :: panner"></div>
+
+<!-- Body -->
+<div class="container-fluid mb-5">
+  <div class="row border-top px-xl-5">
+    <!-- Left Menu -->
+    <div class="col-lg-3 d-none d-lg-block">
+      <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+        <h6 class="m-0">Admin Manager</h6>
+      </a>
+      <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+        <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+          <a th:href="@{/manageCustomer}" class="nav-item nav-link">Customer Manager</a>
+          <a th:href="@{/manageProduct}" class="nav-item nav-link">Product Manager</a>
+          <a th:href="@{/manageBill}" class="nav-item nav-link">Bill Manager</a>
+        </div>
+      </nav>
+    </div>
+    <!-- End Left Menu -->
+
+    <!-- Right Content -->
+    <div class="col-lg-9">
+      <div th:if="${manageCustomer != null}">
+        <div th:if="${allCustomers != null}">
+          <div th:replace="fragments/customerManager :: customerManager"></div>
+        </div>
+      </div>
+
+      <div th:if="${manageProduct != null}">
+        <div th:replace="fragments/productManager :: productManager"></div>
+      </div>
+
+      <div th:if="${manageBill != null}">
+        <div th:replace="fragments/billManager :: billManager"></div>
+      </div>
+    </div>
+    <!-- End Right Content -->
+  </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
