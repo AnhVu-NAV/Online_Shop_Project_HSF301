@@ -8,4 +8,7 @@ public interface UserService {
     void banUser(int userId);
     void unbanUser(int userId);
     List<User> getCustomersByName(String name);
+    User getUserByUsernameAndPassword(String username, String password);
+    boolean isUsernameTaken(String username);
+    void insertUser(User user);
 }
