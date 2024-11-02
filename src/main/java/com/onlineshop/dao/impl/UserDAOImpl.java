@@ -58,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<User> getCustomersByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createQuery("from User where role.id = 1 and fullname like :name", User.class);
+        Query<User> query = session.createQuery("from User where role.id = 1 and fullName like :name", User.class);
         query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
