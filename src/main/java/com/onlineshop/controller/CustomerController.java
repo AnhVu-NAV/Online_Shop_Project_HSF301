@@ -29,12 +29,13 @@ public class CustomerController {
     private OrderDAO orderDAO;
 
     @GetMapping("/customer")
-    public String handleRequest(@RequestParam(required = false) String service,
-                                @RequestParam(required = false) String keywords,
-                                @RequestParam(required = false) String sortBy,
-                                @RequestParam(required = false) String filterByPrice,
-                                @RequestParam(required = false) String filterByBrand,
-                                @RequestParam(required = false) Integer productId,
+    public String handleRequest(@RequestParam(name = "service", required = false) String service,
+                                @RequestParam(name = "keywords", required = false) String keywords,
+                                @RequestParam(name = "sortBy", required = false) String sortBy,
+                                @RequestParam(name = "filterByPrice", required = false) String filterByPrice,
+                                @RequestParam(name = "filterByBrand", required = false) String filterByBrand,
+                                @RequestParam(name = "productId", required = false) Integer productId,
+
                                 Model model,
                                 HttpSession session) {
 
