@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VShopper</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
+<!-- Body -->
+<div class="container-fluid pt-5" id="product">
+    <div class="row px-xl-5">
+        <div th:replace="fragments/menu :: menu"></div>
+        <div th:replace="fragments/content :: content" th:with="allProducts=${allProducts}"></div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
