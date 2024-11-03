@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service//
+@Service
+
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -40,17 +41,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User getUserByUsernameAndPassword(String username, String password) {
-        return null;
+        return userDAO.getOne(username, password);
     }
 
     @Override
+    @Transactional
     public boolean isUsernameTaken(String username) {
-        return false;
+        return userDAO.getAll().stream().anyMatch(user -> user.getUsername().equals(username));
     }
 
     @Override
+    @Transactional
     public void insertUser(User user) {
-
+        userDAO.insert(user);
     }
+
+
 }
