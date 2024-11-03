@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1 th:text="${product.name}"></h1>
+    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 100%; height: auto;">
+    <p th:text="${product.description}"></p>
+    <p>Price: <span th:text="'&#36;' + ${product.price}"></span></p>
+    <p>Available Quantity: <span th:text="${product.quantity}"></span></p>
+    <a th:href="@{/cart(service='addToCart', productId=${product.id})}" class="btn btn-primary">Add to Cart</a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
