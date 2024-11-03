@@ -26,9 +26,10 @@ public class BillDAOImpl implements BillDAO {
 
         // Native SQL query to select the relevant data
         String sql = "SELECT b.id, u.fullname as customerName, b.created_date, u.address, u.email, u.phone, " +
-                "SUM(od.price * od.product_quantity) as total, b.status " +
+                "SUM(od.product_quantity * p.price) as total, b.status " +
                 "FROM bill b " +
                 "JOIN order_detail od ON od.order_id = b.order_id " +
+                "JOIN product p ON p.id = od.product_id " +
                 "JOIN users u ON u.id = b.user_id " +
                 "GROUP BY b.id, u.fullname, b.created_date, u.address, u.email, u.phone, b.status";
 
@@ -84,7 +85,7 @@ public class BillDAOImpl implements BillDAO {
 
         String sql = "SELECT b.id as billId, u.fullname as customerName, b.created_date as createdDate, " +
                 "p.name as productName, p.image_url, od.product_quantity as quantity, " +
-                "p.price, (p.price * od.product_quantity) as subTotal " +
+                "p.price, (p.price * od.product_quantity) as total " +
                 "FROM bill b " +
                 "JOIN users u ON u.id = b.user_id " +
                 "JOIN order_detail od ON od.order_id = b.order_id " +
