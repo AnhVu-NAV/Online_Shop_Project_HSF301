@@ -3,12 +3,12 @@ package com.onlineshop.dao.impl;
 
 import com.onlineshop.dao.BillDAO;
 import com.onlineshop.dto.BillDetailDTO;
-import com.onlineshop.entity.BillDetail;
-import com.onlineshop.entity.BillDetailForAdmin;
+import com.onlineshop.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import javax.persistence.TypedQuery;
 
 import java.sql.Date;
 import java.util.List;
@@ -152,6 +152,54 @@ public class BillDAOImpl implements BillDAO {
             billDetail.setStatus((String) row[7]);
             return billDetail;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public int insert(Order order, User user, String status) {
+        Session session = sessionFactory.getCurrentSession();
+        Bill bill = new Bill();
+        bill.setOrder(order);
+        bill.setUser(user);
+        bill.setStatus(status);
+        bill.setCreatedDate(new Date(new java.util.Date().getTime()).toLocalDate());
+        session.save(bill);
+        return bill.getId();
+    }
+
+    @Override
+    public void updateStatus(String status, int billId) {
+        Session session = sessionFactory.getCurrentSession();
+        Bill bill = session.get(Bill.class, billId);
+        if (bill != null) {
+            bill.setStatus(status);
+            session.update(bill);
+        }
+    }
+
+    @Override
+    public List<BillDetail> showBillDetail(int billId) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM BillDetail bd WHERE bd.id = :billId";
+        TypedQuery<BillDetail> query = (TypedQuery<BillDetail>) session.createQuery(hql, BillDetail.class);
+        query.setParameter("billId", billId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<BillDetail> showBillDetailForAdmin() {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT bd FROM BillDetail bd";
+        TypedQuery<BillDetail> query = (TypedQuery<BillDetail>) session.createQuery(hql, BillDetail.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<BillDetail> showBillDetailForAdminFilterByStatus(String status) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT bd FROM BillDetail bd WHERE bd.status = :status";
+        TypedQuery<BillDetail> query = (TypedQuery<BillDetail>) session.createQuery(hql, BillDetail.class);
+        query.setParameter("status", status);
+        return query.getResultList();
     }
 
 }

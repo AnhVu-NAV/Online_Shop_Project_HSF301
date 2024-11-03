@@ -17,4 +17,5 @@ public interface ProductDAO {
     List<Product> filterByPrice(String filterByPrice, List<Product> products);
     List<Product> filterByBrand(String filterByBrand, List<Product> products);
     List<Product> sortProducts(List<Product> products, String sortBy);
+    int insertProducts(Product product);
 }

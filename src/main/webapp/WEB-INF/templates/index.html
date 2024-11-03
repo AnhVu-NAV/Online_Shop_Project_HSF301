@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>VShopper - Online Shop</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Free HTML Templates" name="keywords" />
-    <meta content="Free HTML Templates" name="description" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link href="img/favicon.ico" rel="icon"/>
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
@@ -24,11 +24,11 @@
     />
 
     <!-- Libraries Stylesheet -->
-<!--    <link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />-->
+    <!--    <link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />-->
     <link rel="stylesheet" th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}">
 
     <!-- Customized Bootstrap Stylesheet -->
-<!--    <link href="static/css/style.css" rel="stylesheet" />-->
+    <!--    <link href="static/css/style.css" rel="stylesheet" />-->
     <link rel="stylesheet" th:href="@{/css/index.css}">
 
     <style>
@@ -44,6 +44,7 @@
         .badge-warning[href] {
             background-color: #c67605;
         }
+
         #lblCartCount {
             font-size: 12px;
             background: #ff0000;
@@ -89,33 +90,34 @@
         </div>
         <div class="col-lg-6 col-6 text-left">
             <th:block th:if="${user != null}">
-            <form action="customer" id="searchByName" th:if="${user.role_id != 0}">
-                <input type="hidden" name="service" value="searchByKeywords"/>
-                <div class="input-group">
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search for products"
-                            name="keywords"
-                            th:value="${keywords}"
-                    />
-                    <div class="input-group-append">
-                        <button class="search-button btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
+                <form action="customer" id="searchByName" th:if="${user.role.getId() != 0}">
+                    <input type="hidden" name="service" value="searchByKeywords"/>
+                    <div class="input-group">
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Search for products"
+                                name="keywords"
+                                th:value="${keywords}"
+                        />
+                        <div class="input-group-append">
+                            <button class="search-button btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </th:block>
         </div>
         <th:block th:if="${user != null}">
-        <div class="col-lg-3 col-6 text-right" th:if="${user.role_id == 1}">
-            <a href="cart?service=showCart" class="btn border">
-                <i class="fas fa-shopping-cart text-primary"></i>
-                <span class='badge badge-warning' id='lblCartCount' th:text="${session.numberProductsInCart}"></span>
-                <span class="badge">Show Cart</span>
-            </a>
-        </div>
+            <div class="col-lg-3 col-6 text-right" th:if="${user.role.getId() == 1}">
+                <a href="cart?service=showCart" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class='badge badge-warning' id='lblCartCount'
+                          th:text="${session.numberProductsInCart}"></span>
+                    <span class="badge">Show Cart</span>
+                </a>
+            </div>
         </th:block>
     </div>
 </div>
@@ -160,8 +162,9 @@
                         <a href="#product" class="nav-item nav-link">Products</a>
                         <a href="#footer" class="nav-item nav-link">Contact</a>
                         <th:block th:if="${user != null}">
-                        <a href="customerOrders" class="nav-item nav-link" th:if="${user.role_id == 1}">My Orders</a>
-                        <a href="admin" class="nav-item nav-link" th:if="${user.role_id == 0}">Shop Manager</a>
+                            <a href="customerOrders" class="nav-item nav-link" th:if="${user.role.getId() == 1}">My
+                                Orders</a>
+                            <a href="admin" class="nav-item nav-link" th:if="${user.role.getId() == 0}">Shop Manager</a>
                         </th:block>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
@@ -312,7 +315,7 @@
             <div class="row pb-3">
                 <div class="col-12 pb-1">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="customer" >
+                        <form action="customer">
                             <input type="hidden" name="service" value="searchByKeywords"/>
                             <div class="input-group">
                                 <input
@@ -333,11 +336,15 @@
                         <!--Sort product-->
                         <div class="sort-options ml-4">
                             <label for="sortSelect">Sort by:</label>
-                            <select id="sortSelect"   onchange="sortProducts(this.value)" name="sortBy">
+                            <select id="sortSelect" onchange="sortProducts(this.value)" name="sortBy">
                                 <option value="unsorted" th:selected="${sortBy == 'unsorted'}">Sort by...</option>
                                 <option value="latest" th:selected="${sortBy == 'latest'}">Latest</option>
-                                <option value="priceLowHigh" th:selected="${sortBy == 'priceLowHigh'}">Price: Low to High</option>
-                                <option value="priceHighLow" th:selected="${sortBy == 'priceHighLow'}">Price: High to Low</option>
+                                <option value="priceLowHigh" th:selected="${sortBy == 'priceLowHigh'}">Price: Low to
+                                    High
+                                </option>
+                                <option value="priceHighLow" th:selected="${sortBy == 'priceHighLow'}">Price: High to
+                                    Low
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -345,28 +352,36 @@
 
                 <!-- Product here -->
                 <div th:each="p : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" th:src=" ${p.imageUrl}" alt="" style="height: 220px"/>
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="mb-3" th:text="${p.name}"></h6>
-                            <div class="d-flex justify-content-center">
-                                <h6 th:text="'$ ' + ${p.price}"></h6>
-                                <h6 class="text-muted ml-2"><del th:text="'$ ' + ${#numbers.formatDecimal(p.price * 1.25, 0, 'COMMA', 2, 'POINT')}"></del></h6>
+                    <a th:href="@{/productDetail(productId=${p.id})}" class="btn btn-sm text-dark p-0">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" th:src="${p.imageUrl}" alt="" style="height: 220px" />
                             </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="mb-3" th:text="${p.name}"></h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6 th:text="'$ ' + ${p.price}"></h6>
+                                    <h6 class="text-muted ml-2">
+                                        <del th:text="'$ ' + ${#numbers.formatDecimal(p.price * 1.25, 0, 'COMMA', 2, 'POINT')}"></del>
+                                    </h6>
+                                </div>
+                            </div>
+                            <i class="fas fa-info-circle text-primary mr-1"></i>View Details
                         </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a th:href="@{/cart(service='addToCart', productId=${p.id})}" class="btn btn-sm text-dark p-0">
-                                <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                            </a>
-                        </div>
+                    </a>
+                    <div class="card-footer d-flex justify-content-center bg-light border">
+                        <!-- Ensure this URL matches the @GetMapping in the controller -->
+                        <a th:href="@{/cart/add(productId=${p.id})}" class="btn btn-sm text-dark p-0">
+                            <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                        </a>
                     </div>
                 </div>
+
             </div>
         </div>
-        <!-- Shop Product End -->
     </div>
+    <!-- Shop Product End -->
+</div>
 </div>
 <!-- Shop End -->
 
@@ -456,7 +471,7 @@
             </p>
         </div>
         <div class="col-md-6 px-xl-0 text-center text-md-right">
-            <img class="img-fluid" src="img/payments.png" alt="" />
+            <img class="img-fluid" src="img/payments.png" alt=""/>
         </div>
     </div>
 </div>

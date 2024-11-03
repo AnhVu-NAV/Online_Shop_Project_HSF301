@@ -16,4 +16,5 @@ public class BillDetail {
     private String customerName, productName, imageUrl;
     private Date createdDate;
     private double price, subTotal;
+
 }

@@ -39,12 +39,12 @@ public class CustomerController {
                                 HttpSession session) {
 
         // Initialize cart count if not present
-        if (session.getAttribute("numberProductsInCart") == null) {
+        if (session != null && session.getAttribute("numberProductsInCart") == null) {
             session.setAttribute("numberProductsInCart", 0);
         }
 
         // Add user to model if logged in
-        User user = (User) session.getAttribute("user");
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
         if (user != null) {
             model.addAttribute("user", user);
         }
@@ -68,14 +68,20 @@ public class CustomerController {
                     List<Order> orders = orderDAO.getOrdersByUserId(user.getId());
                     model.addAttribute("orders", orders);
                     return "orderHistory";
+                } else {
+                    return "redirect:/login";
                 }
-                break;
 
             case "viewProductDetail":
                 if (productId != null) {
                     Product product = productDAO.getProductById(productId);
-                    model.addAttribute("product", product);
-                    return "productDetail";
+                    if (product != null) {
+                        model.addAttribute("product", product);
+                        return "productDetail";
+                    } else {
+                        model.addAttribute("error", "Product not found");
+                        return "redirect:/customer";
+                    }
                 }
                 break;
 

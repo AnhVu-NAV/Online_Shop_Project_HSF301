@@ -1,24 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
     <title>Product Detail</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Product Detail" name="description" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+            rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}">
+
+    <!-- Customized Bootstrap Stylesheet -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<div class="container">
-    <h1 th:text="${product.name}"></h1>
-    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="max-width: 100%; height: auto;">
-    <p th:text="${product.description}"></p>
-    <p>Price: <span th:text="'&#36;' + ${product.price}"></span></p>
-    <p>Available Quantity: <span th:text="${product.quantity}"></span></p>
-    <a th:href="@{/cart(service='addToCart', productId=${product.id})}" class="btn btn-primary">Add to Cart</a>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img th:src="${product.imageUrl}" alt="${product.name}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h1 th:text="${product.name}"></h1>
+            <p th:text="${product.description}"></p>
+            <p>Price: <span th:text="'&#36;' + ${product.price}"></span></p>
+            <p>Available Quantity: <span th:text="${product.quantity}"></span></p>
+            <a th:href="@{/cart(service='addToCart', productId=${product.id})}" class="btn btn-primary">Add to Cart</a>
+            <a th:href="@{/customer}" class="btn btn-secondary mt-3">Back to Home</a>
+        </div>
+    </div>
 </div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 </body>
 </html>
