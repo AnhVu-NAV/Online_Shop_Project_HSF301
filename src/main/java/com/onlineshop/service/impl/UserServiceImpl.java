@@ -38,4 +38,19 @@ public class UserServiceImpl implements UserService {
     public List<User> getCustomersByName(String name) {
         return userDAO.getCustomersByName(name);
     }
+
+    @Override
+    public User getUserByUsernameAndPassword(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public boolean isUsernameTaken(String username) {
+        return false;
+    }
+
+    @Override
+    public void insertUser(User user) {
+
+    }
 }

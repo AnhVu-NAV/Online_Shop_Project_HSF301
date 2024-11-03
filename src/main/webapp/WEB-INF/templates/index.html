@@ -88,6 +88,7 @@
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
+            <th:block th:if="${user != null}">
             <form action="customer" id="searchByName" th:if="${user.role_id != 0}">
                 <input type="hidden" name="service" value="searchByKeywords"/>
                 <div class="input-group">
@@ -105,7 +106,9 @@
                     </div>
                 </div>
             </form>
+            </th:block>
         </div>
+        <th:block th:if="${user != null}">
         <div class="col-lg-3 col-6 text-right" th:if="${user.role_id == 1}">
             <a href="cart?service=showCart" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
@@ -113,6 +116,7 @@
                 <span class="badge">Show Cart</span>
             </a>
         </div>
+        </th:block>
     </div>
 </div>
 <!-- Topbar End -->
@@ -155,8 +159,10 @@
                         <a href="customer" class="nav-item nav-link active">Shop</a>
                         <a href="#product" class="nav-item nav-link">Products</a>
                         <a href="#footer" class="nav-item nav-link">Contact</a>
+                        <th:block th:if="${user != null}">
                         <a href="customerOrders" class="nav-item nav-link" th:if="${user.role_id == 1}">My Orders</a>
                         <a href="admin" class="nav-item nav-link" th:if="${user.role_id == 0}">Shop Manager</a>
+                        </th:block>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
                         <a href="login" class="nav-item nav-link" th:if="${session.user == null}">Login</a>
@@ -341,7 +347,7 @@
                 <div th:each="p : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" th:src="${p.imageUrl}" alt="" style="height: 220px"/>
+                            <img class="img-fluid w-100" th:src=" ${p.imageUrl}" alt="" style="height: 220px"/>
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="mb-3" th:text="${p.name}"></h6>
@@ -370,7 +376,7 @@
         <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
             <a href="" class="text-decoration-none">
                 <h1 class="mb-4 display-5 font-weight-semi-bold">
-                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper
+                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">V</span>Shopper
                 </h1>
             </a>
             <p>
@@ -443,7 +449,7 @@
         <div class="col-md-6 px-xl-0">
             <p class="mb-md-0 text-center text-md-left text-dark">
                 &copy;
-                <a class="text-dark font-weight-semi-bold" href="#">EShopper</a>.
+                <a class="text-dark font-weight-semi-bold" href="#">VShopper</a>.
                 All Rights Reserved.
                 Designed by
                 <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">Enric Van</a>
