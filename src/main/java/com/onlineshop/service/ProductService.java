@@ -15,4 +15,4 @@ public interface ProductService {
     void insertProduct(String name, double price, int quantity, String description, String imageUrl, int brandId, LocalDate releaseDate);
     boolean deleteProduct(int productId);
     List<Brand> getAllBrands();
-}
+}//

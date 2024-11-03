@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-// Class Definition
+// Class Definitions
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {

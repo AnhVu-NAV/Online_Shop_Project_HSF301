@@ -4,70 +4,10 @@
     <meta charset="UTF-8">
     <title>Insert Product</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <style>
-        body {
-            background-color: #eceff1;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 700px;
-            width: 100%;
-        }
-        h1 {
-            color: #333;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .form-group label {
-            font-weight: 600;
-            color: #444;
-        }
-        .form-control {
-            border-radius: 12px;
-            border: 1px solid #ced4da;
-            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-        .form-control:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 8px rgba(128, 189, 255, 0.4);
-            outline: none;
-        }
-        button[type="submit"] {
-            background-color: #007bff;
-            border-color: #007bff;
-            border-radius: 6px;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            font-weight: 400;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-            transition: background-color 0.3s, box-shadow 0.3s;
-            color: white;
-        }
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-            box-shadow: 0 6px 14px rgba(0, 86, 179, 0.3);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-4">Add New Product</h1>
+    <h1 class="text-center mt-5">Insert a New Product</h1>
 
     <!-- Insert Product Form -->
     <form th:action="@{/manageProduct/sendInsertDetail}" method="get" class="mt-4">

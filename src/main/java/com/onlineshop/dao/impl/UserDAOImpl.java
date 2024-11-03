@@ -3,8 +3,9 @@ package com.onlineshop.dao.impl;
 import com.onlineshop.dao.UserDAO;
 import com.onlineshop.entity.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+//
 @Repository
 public class UserDAOImpl implements UserDAO {
 
@@ -21,6 +24,8 @@ public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+
 
     @Override
     public List<User> getAllCustomers() {
@@ -65,15 +70,22 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getOne(String username, String password) {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
-        query.setParameter("username", username);
-        query.setParameter("password", password);
-        return query.getResultStream().findFirst().orElse(null);
+        try {
+            return (User) entityManager.createQuery(
+                            "SELECT u FROM User u WHERE u.username = :username AND u.password = :password")
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
+    @Transactional
     public void insert(User user) {
         entityManager.persist(user);
+        System.out.println("User inserted successfully.");
     }
 
     @Override

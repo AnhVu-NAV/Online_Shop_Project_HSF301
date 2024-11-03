@@ -10,4 +10,4 @@ public interface BillService {
     List<BillDetail> showBillDetail(int billId);
     void updateStatus(String status, int billId);
     List<BillDetailForAdmin> showBillDetailForAdminFilterByStatus(String status);
-}
+}//
