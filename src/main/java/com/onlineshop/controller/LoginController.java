@@ -31,7 +31,7 @@ public class LoginController {
         if (user == null) {
             model.addAttribute("invalidUser", "Username or Password is invalid");
             return "login";
-        } else if (user.getBanned()) {
+        } else if (Boolean.TRUE.equals(user.getBanned())) {
             session.invalidate();
             return "redirect:/accessDenied";
         } else {

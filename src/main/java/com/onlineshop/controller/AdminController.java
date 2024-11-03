@@ -17,7 +17,7 @@ public class AdminController {
 //            return "redirect:/accessDenied";
 //        } else {
 //            model.addAttribute("user", user);
-            return "admin_index";
+            return "adminHome";
 //        }
     }
 
@@ -28,7 +28,7 @@ public class AdminController {
 //            return "redirect:/accessDenied";
 //        } else {
 //            model.addAttribute("user", user);
-            return "admin_index";
+            return "adminHome";
 //        }
     }
 }
