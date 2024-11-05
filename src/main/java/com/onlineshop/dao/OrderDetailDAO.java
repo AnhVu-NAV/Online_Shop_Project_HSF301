@@ -9,4 +9,5 @@ import java.util.List;
 public interface OrderDetailDAO {
     void insert(Order order, CartItem cartItem);
     List<OrderDetail> getOrderDetailsByOrderId(int orderId);
+    void saveOrderDetail(OrderDetail orderDetail);
 }

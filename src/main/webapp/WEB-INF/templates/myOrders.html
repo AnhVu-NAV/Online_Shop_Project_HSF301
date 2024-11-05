@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container mt-5">
+    <h2 class="mb-4">My Orders</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total Amount</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${#dates.format(order.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="'$' + ${order.totalAmount}"></td>
+            <td>
+                <a th:href="@{/orderDetails(orderId=${order.id})}" class="btn btn-primary btn-sm">View Details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/customer}" class="btn btn-secondary mt-4">Back to Shop</a>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

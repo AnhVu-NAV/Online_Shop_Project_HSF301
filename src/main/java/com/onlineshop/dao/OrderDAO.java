@@ -10,4 +10,7 @@ public interface OrderDAO {
     int insert(Order order, User user);
     Order getOrdersById(int orderId);
     void deleteOrderById(int orderId);
+    void saveOrUpdateOrder(Order order);
+    Order getOrderById(int orderId);
+    Order getOrderByIdWithDetails(int orderId);
 }

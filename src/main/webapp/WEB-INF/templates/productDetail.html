@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Product Detail</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Product Detail" name="description" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Product Detail" name="description"/>
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link href="img/favicon.ico" rel="icon"/>
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
@@ -27,9 +27,80 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Additional Custom Styles -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .img-fluid {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .img-fluid:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .btn-primary, .btn-secondary {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            color: #ffffff;
+        }
+
+        .availability {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #28a745;
+        }
+    </style>
 </head>
 
 <body>
+<div th:insert="fragments/panner :: panner"></div>
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
@@ -38,13 +109,14 @@
         <div class="col-md-6">
             <h1 th:text="${product.name}"></h1>
             <p th:text="${product.description}"></p>
-            <p>Price: <span th:text="'&#36;' + ${product.price}"></span></p>
-            <p>Available Quantity: <span th:text="${product.quantity}"></span></p>
+            <p>Price: <span class="price" th:text="'$' + ${product.price}"></span> <del class="text-muted ml-2" th:text="'$' + ${product.price * 1.25}"></del></p>
+            <p>Available Quantity: <span class="availability" th:text="${product.quantity}"></span></p>
             <a th:href="@{/cart(service='addToCart', productId=${product.id})}" class="btn btn-primary">Add to Cart</a>
-            <a th:href="@{/customer}" class="btn btn-secondary mt-3">Back to Home</a>
+            <a th:href="@{/customer}" class="btn btn-secondary ">Back to Home</a>
         </div>
     </div>
 </div>
+<div th:insert="fragments/footer :: footer"></div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Content Page</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
+
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/img/favicon.ico}"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"/>
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:fragment="content">
+    <!-- Shop Product Start -->
+    <div class="col-lg-9 col-md-12">
+        <div class="row pb-3">
+            <div class="col-12 pb-1">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <form th:action="@{/customer}" id="searchByName">
+                        <input type="hidden" name="service" value="searchByKeywords"/>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search by name" name="keywords"
+                                   th:value="${keywords}"/>
+                            <div class="input-group-append">
+                                <button class="search-button btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Sort product -->
+                    <div class="sort-options ml-4">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect" onchange="sortProducts(this.value)" name="sortBy">
+                            <option value="unsorted" th:selected="${sortBy == 'unsorted'}">Sort by...</option>
+                            <option value="latest" th:selected="${sortBy == 'latest'}">Latest</option>
+                            <option value="priceLowHigh" th:selected="${sortBy == 'priceLowHigh'}">Price: Low to High
+                            </option>
+                            <option value="priceHighLow" th:selected="${sortBy == 'priceHighLow'}">Price: High to Low
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product card example -->
+            <div th:each="product : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <a th:href="@{/customer(service='viewProductDetail', productId=${product.id})}">
+                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                            <img class="img-fluid w-100" th:src="${product.imageUrl}" alt="" style="height: 220px"/>
+                        </div>
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <h6 class="text-uppercase mb-3" th:text="${product.name}"></h6>
+                            <div class="d-flex justify-content-center">
+                                <h6 th:text="'$' + ${product.price}"></h6>
+                                <h6 class="text-muted ml-2">
+                                    <del th:text="'$' + ${product.price * 1.25}"></del>
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-footer d-flex justify-content-center bg-light border">
+                        <!-- Add to Cart Button -->
+                        <form th:action="@{/cart/add}" method="post" style="display: inline;">
+                            <input type="hidden" name="productId" th:value="${product.id}"/>
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="fas fa-shopping-cart text-light mr-1"></i> Thêm vào giỏ
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Product End -->
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>
