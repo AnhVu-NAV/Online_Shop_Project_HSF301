@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 @Controller
 public class CartController {
@@ -49,27 +46,36 @@ public class CartController {
 
     @GetMapping("/cart/add")
     public String addToCart(@RequestParam("productId") int productId, HttpSession session) {
-        // Retrieve the product from the database
+        // Retrieve product from database
         Product product = productDAO.getProductById(productId);
         if (product == null) {
-            // Redirect back to customer page if the product does not exist
             return "redirect:/customer";
         }
 
-        // Check if the cart item already exists in the session
-        CartItem cartItem = (CartItem) session.getAttribute(String.valueOf(productId));
-        if (cartItem == null) {
-            // If not, create a new CartItem and set the quantity to 1
-            cartItem = new CartItem(product, 1);
-        } else {
-            // If it exists, increment the quantity by 1
-            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        // Retrieve cart from session or create if doesn't exist
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
         }
 
-        // Store the updated CartItem back into the session
-        session.setAttribute(String.valueOf(productId), cartItem);
+        // Check if product already exists in cart
+        boolean found = false;
+        for (CartItem item : cart) {
+            if (item.getProduct().getId() == productId) {
+                item.setQuantity(item.getQuantity() + 1);
+                found = true;
+                break;
+            }
+        }
 
-        // Redirect back to the customer page
+        // If not found, add new CartItem
+        if (!found) {
+            cart.add(new CartItem(product, 1));
+        }
+
+        // Save updated cart back to session
+        session.setAttribute("cart", cart);
+
         return "redirect:/customer";
     }
 
