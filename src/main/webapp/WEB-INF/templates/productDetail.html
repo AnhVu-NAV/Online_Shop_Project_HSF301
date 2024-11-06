@@ -111,7 +111,12 @@
             <p th:text="${product.description}"></p>
             <p>Price: <span class="price" th:text="'$' + ${product.price}"></span> <del class="text-muted ml-2" th:text="'$' + ${product.price * 1.25}"></del></p>
             <p>Available Quantity: <span class="availability" th:text="${product.quantity}"></span></p>
-            <a th:href="@{/cart(service='addToCart', productId=${product.id})}" class="btn btn-primary">Add to Cart</a>
+            <form th:action="@{/cart/add}" method="post" style="display: inline;">
+                <input type="hidden" name="productId" th:value="${product.id}"/>
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fas fa-shopping-cart text-light mr-1"></i> Add to Cart
+                </button>
+            </form>
             <a th:href="@{/customer}" class="btn btn-secondary ">Back to Home</a>
         </div>
     </div>

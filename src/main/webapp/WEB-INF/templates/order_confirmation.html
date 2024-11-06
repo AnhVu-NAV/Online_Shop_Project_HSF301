@@ -8,28 +8,28 @@
 <body>
 
 <div class="container mt-5">
-    <h2 class="text-center text-success">Đơn Hàng Đã Được Xác Nhận!</h2>
-    <p class="text-center">Cảm ơn bạn đã mua hàng tại VShopper. Đơn hàng của bạn đã được xác nhận thành công.</p>
+    <h2 class="text-center text-success">Order Confirmed!</h2>
+    <p class="text-center">Thank you for shopping at VShopper. Your order has been confirmed successfully.</p>
 
     <!-- Thông tin đơn hàng -->
     <div class="card mt-4">
-        <div class="card-header bg-success text-white">Thông Tin Đơn Hàng</div>
+        <div class="card-header bg-success text-white">Order Information</div>
         <div class="card-body">
-            <p><strong>Mã đơn hàng:</strong> <span th:text="${order.id}"></span></p>
-            <p><strong>Ngày tạo:</strong> <span th:text="${order.createdDate}"></span></p>
-            <p><strong>Tổng tiền:</strong> $<span th:text="${order.totalAmount}"></span></p>
+            <p><strong>Order code:</strong> <span th:text="${order.id}"></span></p>
+            <p><strong>Date created:</strong> <span th:text="${order.createdDate}"></span></p>
+            <p><strong>Total amount:</strong> $<span th:text="${order.totalAmount}"></span></p>
         </div>
     </div>
 
     <!-- Chi tiết sản phẩm trong đơn hàng -->
-    <h4 class="mt-4">Chi Tiết Sản Phẩm</h4>
+    <h4 class="mt-4">Product Details</h4>
     <table class="table table-bordered mt-3">
         <thead>
         <tr>
-            <th>Sản Phẩm</th>
-            <th>Số Lượng</th>
-            <th>Giá</th>
-            <th>Tổng Cộng</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>total</th>
         </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
 
     <!-- Liên kết về trang chính -->
     <div class="text-center mt-4">
-        <a th:href="@{/customer}" class="btn btn-primary">Tiếp Tục Mua Sắm</a>
+        <a th:href="@{/customer}" class="btn btn-primary">Continue Shopping</a>
     </div>
 </div>
 

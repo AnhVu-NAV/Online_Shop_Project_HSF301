@@ -109,10 +109,10 @@
 </head>
 <body>
 <div class="container">
-    <h2>Xác nhận thanh toán</h2>
+    <h2>Payment Confirmation</h2>
 
     <div th:if="${cart != null}">
-        <h3>Sản phẩm trong giỏ hàng:</h3>
+        <h3>Products to be paid for:</h3>
         <ul>
             <li th:each="item : ${cart.items}">
                 <span th:text="${item.product.name}">Product Name</span> -
@@ -124,16 +124,16 @@
     </div>
 
     <div class="qr-code">
-        <h3>Quét mã VietQR để thanh toán</h3>
+        <h3>Scan VietQR code to pay</h3>
         <img th:src="${qrCodeUrl}" alt="VietQR Code" />
     </div>
 
     <div class="button-group">
         <form th:action="@{/cart/process-checkout}" method="post" style="display: inline;">
-            <button type="submit">Tôi đã thanh toán</button>
+            <button type="submit">I have paid</button>
         </form>
         <form th:action="@{/cart}" method="get" style="display: inline;">
-            <button type="submit" class="cancel-btn">Hủy</button>
+            <button type="submit" class="cancel-btn">Cancel</button>
         </form>
     </div>
 </div>
