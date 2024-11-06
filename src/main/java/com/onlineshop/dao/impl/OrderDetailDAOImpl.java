@@ -4,6 +4,8 @@ import com.onlineshop.dao.OrderDetailDAO;
 import com.onlineshop.entity.CartItem;
 import com.onlineshop.entity.Order;
 import com.onlineshop.entity.OrderDetail;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +18,9 @@ import java.util.List;
 @Repository
 @Transactional
 public class OrderDetailDAOImpl implements OrderDetailDAO {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -38,5 +43,10 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         TypedQuery<OrderDetail> query = session.createQuery(hql, OrderDetail.class);
         query.setParameter("orderId", orderId);
         return query.getResultList();
+    }
+
+    @Override
+    public void saveOrderDetail(OrderDetail orderDetail) {
+        entityManager.persist(orderDetail);
     }
 }

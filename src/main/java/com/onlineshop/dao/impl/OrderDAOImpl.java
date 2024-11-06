@@ -2,6 +2,7 @@ package com.onlineshop.dao.impl;
 
 import com.onlineshop.dao.OrderDAO;
 import com.onlineshop.entity.Order;
+import jakarta.persistence.Query;
 import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -22,6 +23,9 @@ import java.util.List;
 @Transactional
 public class OrderDAOImpl implements OrderDAO {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -41,11 +45,11 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Order> getOrdersByUserId(int userId) {
-        Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Order o WHERE o.user.id = :userId";
-        TypedQuery<Order> query = (TypedQuery<Order>) session.createQuery(hql, Order.class);
-        query.setParameter("userId", userId);
-        return query.getResultList();
+        List<Order> orders = entityManager.createQuery(hql, Order.class)
+                .setParameter("userId", userId)
+                .getResultList();
+        return orders;
     }
 
     @Override
@@ -55,6 +59,29 @@ public class OrderDAOImpl implements OrderDAO {
         if (order != null) {
             session.delete(order);
         }
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdateOrder(Order order) {
+        if (order.getId() == 0) { // Chỉ sử dụng persist nếu order chưa có ID
+            entityManager.persist(order);
+        } else { // Sử dụng merge nếu order đã có ID
+            entityManager.merge(order);
+        }
+    }
+
+    @Override
+    public Order getOrderById(int orderId) {
+        return entityManager.find(Order.class, orderId);
+    }
+
+    @Override
+    public Order getOrderByIdWithDetails(int orderId) {
+        String hql = "SELECT o FROM Order o LEFT JOIN FETCH o.orderDetails WHERE o.id = :orderId";
+        Query query = entityManager.createQuery(hql); // Không ép kiểu sang TypedQuery
+        query.setParameter("orderId", orderId);
+        return (Order) query.getSingleResult(); // Ép kiểu ở đây thay vì ép kiểu Query
     }
 }
 

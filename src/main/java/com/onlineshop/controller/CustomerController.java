@@ -3,12 +3,9 @@ package com.onlineshop.controller;
 import com.onlineshop.dao.BrandDAO;
 import com.onlineshop.dao.OrderDAO;
 import com.onlineshop.dao.ProductDAO;
-import com.onlineshop.entity.Brand;
-import com.onlineshop.entity.Order;
-import com.onlineshop.entity.Product;
-import com.onlineshop.entity.User;
-import com.onlineshop.entity.CartItem;
+import com.onlineshop.entity.*;
 import jakarta.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,40 +120,36 @@ public class CustomerController {
         return "index";
     }
 
-//    private List<Product> filterByPrice(String filterByPrice, List<Product> products) {
-//        switch (filterByPrice) {
-//            case "price-500-750":
-//                return products.stream().filter(p -> p.getPrice() >= 500 && p.getPrice() <= 750).collect(Collectors.toList());
-//            case "price-750-1000":
-//                return products.stream().filter(p -> p.getPrice() > 750 && p.getPrice() <= 1000).collect(Collectors.toList());
-//            case "price-1000-1500":
-//                return products.stream().filter(p -> p.getPrice() > 1000 && p.getPrice() <= 1500).collect(Collectors.toList());
-//            case "price-1500up":
-//                return products.stream().filter(p -> p.getPrice() > 1500).collect(Collectors.toList());
-//            default:
-//                return products;
-//        }
-//    }
-//
-//    private List<Product> sortProducts(List<Product> products, String sortBy) {
-//        switch (sortBy) {
-//            case "priceLowHigh":
-//                return products.stream().sorted(Comparator.comparing(Product::getPrice)).collect(Collectors.toList());
-//            case "priceHighLow":
-//                return products.stream().sorted(Comparator.comparing(Product::getPrice).reversed()).collect(Collectors.toList());
-//            case "latest":
-//                return products.stream().sorted(Comparator.comparing(Product::getReleaseDate).reversed()).collect(Collectors.toList());
-//            default:
-//                return products;
-//        }
-//    }
-//
-//    private List<Product> filterByBrand(String filterByBrand, List<Product> products) {
-//        if (filterByBrand.equals("brand-all")) {
-//            return products;
-//        }
-//        return products.stream()
-//                .filter(p -> p.getBrand().getName().equalsIgnoreCase(filterByBrand))
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/customerOrders")
+    public String viewOrders(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        List<Order> orders = orderDAO.getOrdersByUserId(user.getId());
+        model.addAttribute("orders", orders);
+        return "myOrders"; // Trang hiển thị danh sách đơn hàng
+    }
+
+    @GetMapping("/orderDetails")
+    public String viewOrderDetails(@RequestParam("orderId") Integer orderId, Model model) {
+//        Order order = orderDAO.getOrdersById(orderId);
+        // Lấy order cùng với orderDetails
+        Order order = orderDAO.getOrderByIdWithDetails(orderId);
+        if (order == null) {
+            model.addAttribute("error", "Order not found.");
+            return "redirect:/customerOrders";
+        }
+        if (order.getTotalAmount() == null) {
+            order.setTotalAmount(0.0); // Gán giá trị mặc định
+        }
+
+        List<OrderDetail> orderDetails = order.getOrderDetails();
+        // Khởi tạo thủ công collection `orderDetails`
+//        Hibernate.initialize(order.getOrderDetails());
+        model.addAttribute("order", order);
+        model.addAttribute("orderDetails", order.getOrderDetails());
+        return "orderDetails"; // Trang hiển thị chi tiết đơn hàng
+    }
 }

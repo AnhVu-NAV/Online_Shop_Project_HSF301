@@ -19,22 +19,21 @@ import lombok.ToString;
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
-    @EmbeddedId
-    private OrderDetailId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // Thêm khóa chính tự động tăng
 
     @Column(name = "product_quantity")
     private int productQuantity;
 
     @ManyToOne
-    @MapsId("orderId")
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order; // Tham chiếu đến đơn hàng
 
     @Column(name = "price")
     private double price;
 
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product; // Tham chiếu đến sản phẩm
 }

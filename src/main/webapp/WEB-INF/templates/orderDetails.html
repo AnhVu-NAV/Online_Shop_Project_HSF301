@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container mt-5">
+    <h2 class="mb-4">Order Details - Order ID: <span th:text="${order.id}"></span></h2>
+    <p>Order Date: <span th:text="${#dates.format(order.createdDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p>Total Amount: <span th:text="'$' + ${order.totalAmount}"></span></p>
+
+    <h4 class="mt-4">Products</h4>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${orderDetails}">
+            <td th:text="${detail.product.name}"></td>
+            <td th:text="${detail.productQuantity}"></td>
+            <td th:text="'$' + ${detail.price}"></td>
+            <td th:text="'$' + ${detail.price * detail.productQuantity}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/customerOrders}" class="btn btn-secondary mt-4">Back to My Orders</a>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>
