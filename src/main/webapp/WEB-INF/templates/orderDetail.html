@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<!--<div th:replace="fragments/header :: header"></div>-->
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Order Details</h1>
+
+    <div th:if="${not #lists.isEmpty(orderDetails)}">
+        <!-- Order Summary -->
+        <div class="mb-4">
+            <h4 th:text="'Order ID: ' + ${order.id}"></h4>
+            <p th:text="'Order Date: ' + ${#dates.format(order.createdDate, 'dd-MM-yyyy HH:mm')}"></p>
+            <p th:text="'User: ' + ${order.user.fullname} + ' (' + ${order.user.email} + ')'"></p>
+        </div>
+
+        <!-- Order Details Table -->
+        <div class="col-lg-12 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                <tr th:each="detail : ${orderDetails}">
+                    <td class="align-middle" th:text="${detail.product.name}"></td>
+                    <td class="align-middle">
+                        <img th:src="${detail.product.imageUrl}" th:alt="${detail.product.name}" style="width: 100px;">
+                    </td>
+                    <td class="align-middle" th:text="${detail.productQuantity}"></td>
+                    <td class="align-middle" th:text="${#numbers.formatDecimal(detail.price, 1, 2)}"></td>
+                    <td class="align-middle" th:text="${#numbers.formatDecimal(detail.price * detail.productQuantity, 1, 2)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p th:if="${#lists.isEmpty(orderDetails)}" class="alert alert-info">No order details found.</p>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a th:href="@{/myOrders}"><button class="btn btn-success">Back to My Orders</button></a>
+    </div>
+</div>
+
+<!--<div th:replace="fragments/footer :: footer"></div>-->
+</body>
+</html>

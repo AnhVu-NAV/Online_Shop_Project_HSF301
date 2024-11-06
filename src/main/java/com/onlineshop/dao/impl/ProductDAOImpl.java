@@ -61,7 +61,7 @@ public class ProductDAOImpl implements ProductDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
         }
-
+    @Override
     public List<Product> filterByPrice(String filterByPrice, List<Product> products) {
         switch (filterByPrice) {
             case "price-500-750":
@@ -82,6 +82,7 @@ public class ProductDAOImpl implements ProductDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
         }
+    @Override
     public List<Product> filterByBrand(String filterByBrand, List<Product> products) {
         if (filterByBrand.equals("brand-all")) {
             return products;
@@ -104,6 +105,8 @@ public class ProductDAOImpl implements ProductDAO {
             session.delete(product);
         }
     }
+
+    @Override
     public List<Product> sortProducts(List<Product> products, String sortBy) {
         if (sortBy.equals("priceLowHigh")) {
             return products.stream().sorted(Comparator.comparing(Product::getPrice)).collect(Collectors.toList());

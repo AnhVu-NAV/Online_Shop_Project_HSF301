@@ -56,30 +56,30 @@
                         </tr>
                         </thead>
                         <tbody class="align-middle">
-                        <tr th:each="item : ${session.cartItems}">
+                        <tr th:each="cartItem : ${cart.values()}">
                             <form action="cart" id="add-cart">
                                 <input type="hidden" name="service" value="update"/>
                             </form>
-                            <td class="align-middle" th:text="${item.product.id}"></td>
+                            <td class="align-middle" th:text="${cartItem.product.id}"></td>
                             <td class="align-middle">
-                                <img th:src="${item.product.imageUrl}" alt="" style="width: 50px" />
-                                <span th:text="${item.product.name}"></span>
+                                <img th:src="${cartItem.product.imageUrl}" alt="" style="width: 50px" />
+                                <span th:text="${cartItem.product.name}"></span>
                             </td>
-                            <td class="align-middle" th:text="${item.product.price}"></td>
+                            <td class="align-middle" th:text="'$' + ${#numbers.formatDecimal(cartItem.product.price, 1, 2)}"></td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px" >
                                     <input
                                             type="number"
                                             class="form-control form-control-sm bg-secondary text-center"
-                                            th:value="${item.quantity}"
+                                            th:value="${cartItem.quantity}"
                                             form="add-cart"
-                                            th:name="'p' + ${item.product.id}"
+                                            th:name="'p' + ${cartItem.product.id}"
                                     />
                                 </div>
                             </td>
-                            <td class="align-middle" th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 1)}"></td>
+                            <td class="align-middle" th:text="'$' + ${#numbers.formatDecimal(cartItem.product.price * cartItem.quantity, 1, 2)}"></td>
                             <td class="align-middle">
-                                <a th:href="@{/cart(service='removeItem', id=${item.product.id})}">
+                                <a th:href="@{/cart(service='removeItem', id=${cartItem.product.id})}">
                                     <button class="btn btn-sm btn-primary">
                                         <i class="fa fa-times"></i>
                                     </button>
@@ -110,17 +110,17 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium" th:text="'$' + ${#numbers.formatDecimal(total, 1, 1)}"></h6>
+                                <h6 class="font-weight-medium" th:text="'$' + ${#numbers.formatDecimal(total, 1, 2)}"></h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$0</h6>
+                                <h6 class="font-weight-medium">$0.00</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold" th:text="'$' + ${#numbers.formatDecimal(total, 1, 1)}"></h5>
+                                <h5 class="font-weight-bold" th:text="'$' + ${#numbers.formatDecimal(total, 1, 2)}"></h5>
                             </div>
 
                             <a th:href="@{/cart(service='checkOut')}">
@@ -155,13 +155,13 @@
                         <tr th:each="billDetail : ${billDetails}">
                             <td class="align-middle" th:text="${billDetail.id}"></td>
                             <td class="align-middle" th:text="${billDetail.customerName}"></td>
-                            <td class="align-middle" th:text="${billDetail.createdDate}"></td>
+                            <td class="align-middle" th:text="${#dates.format(billDetail.createdDate, 'dd-MM-yyyy HH:mm')}"></td>
                             <td class="align-middle">
                                 <img th:src="${billDetail.imageUrl}" alt="" style="width: 50px" />
                                 <span th:text="${billDetail.productName}"></span>
                             </td>
                             <td class="align-middle" th:text="${billDetail.productQuantity}"></td>
-                            <td class="align-middle" th:text="${#numbers.formatDecimal(billDetail.subTotal, 1, 0)}"></td>
+                            <td class="align-middle" th:text="'$' + ${#numbers.formatDecimal(billDetail.subTotal, 1, 2)}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -170,22 +170,22 @@
                 <div th:if="${showBill != null}" class="col-lg-4" style="transform: translateY(65px)">
                     <div class="card border-secondary mb-5">
                         <div class="card-header bg-secondary border-0">
-                            <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                            <h4 class="font-weight-semi-bold m-0">Bill Summary</h4>
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium" th:text="'$' + ${#numbers.formatDecimal(total, 1, 0)}"></h6>
+                                <h6 class="font-weight-medium" th:text="'$' + ${#numbers.formatDecimal(total, 1, 2)}"></h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$0</h6>
+                                <h6 class="font-weight-medium">$0.00</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold" th:text="'$' + ${#numbers.formatDecimal(total, 1, 0)}"></h5>
+                                <h5 class="font-weight-bold" th:text="'$' + ${#numbers.formatDecimal(total, 1, 2)}"></h5>
                             </div>
                         </div>
                     </div>

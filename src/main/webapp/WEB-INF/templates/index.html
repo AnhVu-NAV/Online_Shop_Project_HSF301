@@ -110,11 +110,10 @@
             </th:block>
         </div>
         <th:block th:if="${user != null}">
-            <div class="col-lg-3 col-6 text-right" th:if="${user.role.getId() == 1}">
-                <a href="cart?service=showCart" class="btn border">
+            <div class="col-lg-3 col-6 text-right" th:if="${user != null and user.role.getId() == 1}">
+                <a th:href="@{/cart}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class='badge badge-warning' id='lblCartCount'
-                          th:text="${session.numberProductsInCart}"></span>
+                    <span class='badge badge-warning' id='lblCartCount' th:text="${#maps.size(session.cart)}"></span>
                     <span class="badge">Show Cart</span>
                 </a>
             </div>
@@ -162,7 +161,7 @@
                         <a href="#product" class="nav-item nav-link">Products</a>
                         <a href="#footer" class="nav-item nav-link">Contact</a>
                         <th:block th:if="${user != null}">
-                            <a href="customerOrders" class="nav-item nav-link" th:if="${user.role.getId() == 1}">My
+                            <a th:href="@{/myOrders}" class="nav-item nav-link" th:if="${user.role.getId() == 1}">My
                                 Orders</a>
                             <a href="admin" class="nav-item nav-link" th:if="${user.role.getId() == 0}">Shop Manager</a>
                         </th:block>
@@ -350,19 +349,19 @@
                     </div>
                 </div>
 
-                <!-- Product here -->
+                <!-- Update the product grid -->
                 <div th:each="p : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
                     <a th:href="@{/productDetail(productId=${p.id})}" class="btn btn-sm text-dark p-0">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" th:src="${p.imageUrl}" alt="" style="height: 220px" />
+                                <img class="img-fluid w-100" th:src="${p.imageUrl}" alt="" style="height: 220px"/>
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <h6 class="mb-3" th:text="${p.name}"></h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6 th:text="'$ ' + ${p.price}"></h6>
+                                    <h6 th:text="'$ ' + ${#numbers.formatDecimal(p.price, 1, 2)}"></h6>
                                     <h6 class="text-muted ml-2">
-                                        <del th:text="'$ ' + ${#numbers.formatDecimal(p.price * 1.25, 0, 'COMMA', 2, 'POINT')}"></del>
+                                        <del th:text="'$ ' + ${#numbers.formatDecimal(p.price * 1.25, 1, 2)}"></del>
                                     </h6>
                                 </div>
                             </div>
@@ -370,8 +369,7 @@
                         </div>
                     </a>
                     <div class="card-footer d-flex justify-content-center bg-light border">
-                        <!-- Ensure this URL matches the @GetMapping in the controller -->
-                        <a th:href="@{/cart/add(productId=${p.id})}" class="btn btn-sm text-dark p-0">
+                        <a th:href="@{/cart(service='addToCart', id=${p.id})}" class="btn btn-sm text-dark p-0">
                             <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
                         </a>
                     </div>
@@ -510,13 +508,11 @@
     });
 
     function filter(id) {
-        // Implement your filter logic here
-        console.log("Filter applied:", id);
+        window.location.href = [[@{/customer}]] + '?service=filter&' + id + '=true';
     }
 
     function sortProducts(value) {
-        // Implement your sorting logic here
-        console.log("Sort applied:", value);
+        window.location.href = [[@{/customer}]] + '?service=sort&sortBy=' + value;
     }
 </script>
 </body>
