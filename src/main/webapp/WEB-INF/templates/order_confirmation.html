@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác Nhận Đơn Hàng - VShopper</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center text-success">Order Confirmed!</h2>
+    <p class="text-center">Thank you for shopping at VShopper. Your order has been confirmed successfully.</p>
+
+    <!-- Thông tin đơn hàng -->
+    <div class="card mt-4">
+        <div class="card-header bg-success text-white">Order Information</div>
+        <div class="card-body">
+            <p><strong>Order code:</strong> <span th:text="${order.id}"></span></p>
+            <p><strong>Date created:</strong> <span th:text="${order.createdDate}"></span></p>
+            <p><strong>Total amount:</strong> $<span th:text="${order.totalAmount}"></span></p>
+        </div>
+    </div>
+
+    <!-- Chi tiết sản phẩm trong đơn hàng -->
+    <h4 class="mt-4">Product Details</h4>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${orderDetails}">
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.productQuantity}"></td>
+            <td th:text="'$' + ${item.price}"></td>
+            <td th:text="'$' + ${item.price * item.productQuantity}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Liên kết về trang chính -->
+    <div class="text-center mt-4">
+        <a th:href="@{/customer}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

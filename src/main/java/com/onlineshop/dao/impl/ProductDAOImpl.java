@@ -13,7 +13,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 // ProductDAO Implementations
@@ -59,11 +61,20 @@ public class ProductDAOImpl implements ProductDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
         }
-
+    @Override
     public List<Product> filterByPrice(String filterByPrice, List<Product> products) {
-        // Implement filtering logic based on price range
-        // This is a placeholder
-        return products;
+        switch (filterByPrice) {
+            case "price-500-750":
+                return products.stream().filter(p -> p.getPrice() >= 500 && p.getPrice() <= 750).collect(Collectors.toList());
+            case "price-750-1000":
+                return products.stream().filter(p -> p.getPrice() > 750 && p.getPrice() <= 1000).collect(Collectors.toList());
+            case "price-1000-1500":
+                return products.stream().filter(p -> p.getPrice() > 1000 && p.getPrice() <= 1500).collect(Collectors.toList());
+            case "price-1500up":
+                return products.stream().filter(p -> p.getPrice() > 1500).collect(Collectors.toList());
+            default:
+                return products;
+        }
     }
 
     @Override
@@ -71,10 +82,13 @@ public class ProductDAOImpl implements ProductDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
         }
+    @Override
     public List<Product> filterByBrand(String filterByBrand, List<Product> products) {
-        // Implement filtering logic based on brand
-        // This is a placeholder
-        return products;
+        if (filterByBrand.equals("brand-all")) {
+            return products;
+        }
+        int brandId = Integer.parseInt(filterByBrand.split("[-]")[1]);
+        return products.stream().filter(p -> p.getBrand().getId() == brandId).collect(Collectors.toList());
     }
 
     @Override
@@ -91,9 +105,25 @@ public class ProductDAOImpl implements ProductDAO {
             session.delete(product);
         }
     }
+
+    @Override
     public List<Product> sortProducts(List<Product> products, String sortBy) {
-        // Implement sorting logic based on sortBy parameter
-        // This is a placeholder
+        if (sortBy.equals("priceLowHigh")) {
+            return products.stream().sorted(Comparator.comparing(Product::getPrice)).collect(Collectors.toList());
+        }
+        if (sortBy.equals("priceHighLow")) {
+            return products.stream().sorted(Comparator.comparing(Product::getPrice).reversed()).collect(Collectors.toList());
+        }
+        if (sortBy.equals("latest")) {
+            return products.stream().sorted(Comparator.comparing(Product::getReleaseDate).reversed()).collect(Collectors.toList());
+        }
         return products;
+    }
+
+    @Override
+    public int insertProducts(Product product) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(product);
+        return product.getId();
     }
 }

@@ -1,9 +1,149 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Menu</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+            rel="stylesheet"/>
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+
 <body>
-<div class="menu">
-    <h5>Filter by price</h5>
-    <!-- Menu filter form -->
+<div th:fragment="menu">
+    <!-- Sidebar Start -->
+    <div class="col-lg-3 col-md-12">
+        <!-- Price Filter Start -->
+        <div class="border-bottom mb-4 pb-4">
+            <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+            <form>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="price"
+                            id="price-all"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByPrice == null || filterByPrice == 'price-all'}"
+                    />
+                    <label class="custom-control-label" for="price-all">All Price</label>
+                </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="price"
+                            id="price-500-750"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByPrice == 'price-500-750'}"
+                    />
+                    <label class="custom-control-label" for="price-500-750">$500 - $750</label>
+                </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="price"
+                            id="price-750-1000"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByPrice == 'price-750-1000'}"
+                    />
+                    <label class="custom-control-label" for="price-750-1000">$750 - $1000</label>
+                </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="price"
+                            id="price-1000-1500"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByPrice == 'price-1000-1500'}"
+                    />
+                    <label class="custom-control-label" for="price-1000-1500">$1000 - $1500</label>
+                </div>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="price"
+                            id="price-1500up"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByPrice == 'price-1500up'}"
+                    />
+                    <label class="custom-control-label" for="price-1500up">$1500+</label>
+                </div>
+            </form>
+        </div>
+        <!-- Price Filter End -->
+
+        <!-- Brand Filter Start -->
+        <div class="border-bottom mb-4 pb-4">
+            <h5 class="font-weight-semi-bold mb-4">Filter by brand</h5>
+            <form>
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="brand"
+                            id="brand-all"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByBrand == 'brand-all' || filterByBrand == null}"
+                    />
+                    <label class="custom-control-label" for="brand-all">All</label>
+                </div>
+                <div th:each="brand : ${allBrands}" class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            name="brand"
+                            th:id="'brand-' + ${brand.id}"
+                            onchange="filter(this.id)"
+                            th:checked="${filterByBrand == 'brand-' + brand.id}"
+                    />
+                    <label class="custom-control-label" th:for="'brand-' + ${brand.id}" th:text="${brand.name}">Brand Name</label>
+                </div>
+            </form>
+        </div>
+        <!-- Brand Filter End -->
+    </div>
+    <!-- Sidebar End -->
+
+    <!-- JavaScript for Filter Logic -->
+    <script>
+        // Get all checkbox groups
+        const checkboxGroups = document.querySelectorAll('input[type="checkbox"][name]');
+
+        // Add change event listener to each checkbox group
+        checkboxGroups.forEach(group => {
+            group.addEventListener('change', () => {
+                // Uncheck other checkboxes in the same group
+                checkboxGroups.forEach(checkbox => {
+                    if (checkbox.name === group.name && checkbox !== group) {
+                        checkbox.checked = false;
+                    }
+                });
+            });
+        });
+    </script>
 </div>
 </body>
 </html>

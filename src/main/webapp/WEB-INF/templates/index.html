@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>VShopper - Online Shop</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Free HTML Templates" name="keywords" />
-    <meta content="Free HTML Templates" name="description" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" />
+    <link href="img/favicon.ico" rel="icon"/>
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
@@ -24,12 +24,12 @@
     />
 
     <!-- Libraries Stylesheet -->
-<!--    <link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />-->
+    <!--    <link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />-->
     <link rel="stylesheet" th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}">
 
     <!-- Customized Bootstrap Stylesheet -->
-<!--    <link href="static/css/style.css" rel="stylesheet" />-->
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <!--    <link href="static/css/style.css" rel="stylesheet" />-->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
     <style>
         .badge {
@@ -44,6 +44,7 @@
         .badge-warning[href] {
             background-color: #c67605;
         }
+
         #lblCartCount {
             font-size: 12px;
             background: #ff0000;
@@ -52,415 +53,348 @@
             vertical-align: top;
             margin-left: -10px;
         }
+        a {
+            text-decoration: none;
+            color: inherit; /* Đảm bảo rằng màu của liên kết giống màu văn bản bình thường */
+        }
     </style>
 </head>
 
 <body>
-<!-- Topbar Start -->
-<div class="container-fluid">
-    <div class="row bg-secondary py-2 px-xl-5">
-        <div class="col-lg-6 d-none d-lg-block">
-            <div class="d-inline-flex align-items-center">
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="#">HE1xxxxx</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="#">Nguyễn Văn A</a>
-                <span class="text-muted px-2">|</span>
-            </div>
-        </div>
-        <div class="col-lg-6 text-center text-lg-right">
-            <div th:if="${session.fullname != null}">
-                <span class="text-muted px-2">|</span>
-                <span class="text-dark" th:text="'Welcome: ' + ${session.fullname}"></span>
-                <span class="text-muted px-2">|</span>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="logout">Logout</a>
-                <span class="text-muted px-2">|</span>
-            </div>
-        </div>
-    </div>
-    <div class="row align-items-center py-3 px-xl-5">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a href="customer" class="text-decoration-none">
-                <h1 class="m-0 display-5 font-weight-semi-bold">
-                    <span class="text-primary font-weight-bold border px-3 mr-1">V</span>Shopper
-                </h1>
-            </a>
-        </div>
-        <div class="col-lg-6 col-6 text-left">
-            <th:block th:if="${user != null}">
-            <form action="customer" id="searchByName" th:if="${user.role_id != 0}">
-                <input type="hidden" name="service" value="searchByKeywords"/>
-                <div class="input-group">
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search for products"
-                            name="keywords"
-                            th:value="${keywords}"
-                    />
-                    <div class="input-group-append">
-                        <button class="search-button btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-            </th:block>
-        </div>
-        <th:block th:if="${user != null}">
-        <div class="col-lg-3 col-6 text-right" th:if="${user.role_id == 1}">
-            <a href="cart?service=showCart" class="btn border">
-                <i class="fas fa-shopping-cart text-primary"></i>
-                <span class='badge badge-warning' id='lblCartCount' th:text="${session.numberProductsInCart}"></span>
-                <span class="badge">Show Cart</span>
-            </a>
-        </div>
-        </th:block>
+<!-- Header -->
+<div th:insert="fragments/panner :: panner"></div>
+<!-- Body -->
+<div class="container-fluid pt-5" id="product">
+    <div class="row px-xl-5">
+        <div class="col-lg-4" th:insert="fragments/menu :: menu"></div>
+        <div class="col-lg-8" th:insert="fragments/content :: content"></div>
     </div>
 </div>
-<!-- Topbar End -->
 
-<!-- Navbar Start -->
-<div class="container-fluid">
-    <div class="row border-top px-xl-5">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a
-                    class="btn shadow-none d-flex align-items-center justify-content-center bg-primary text-white w-100"
-                    data-toggle="collapse"
-                    href="#navbar-vertical"
-                    style="height: 65px; margin-top: -1px; padding: 0 30px"
-            >
-                <h6 class="m-0">Laptop World</h6>
-            </a>
-        </div>
-        <div class="col-lg-9">
-            <nav
-                    class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0"
-            >
-                <a href="" class="text-decoration-none d-block d-lg-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold">
-                        <span class="text-primary font-weight-bold border px-3 mr-1">V</span>Shopper
-                    </h1>
-                </a>
-                <button
-                        type="button"
-                        class="navbar-toggler"
-                        data-toggle="collapse"
-                        data-target="#navbarCollapse"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div
-                        class="collapse navbar-collapse justify-content-between"
-                        id="navbarCollapse"
-                >
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="customer" class="nav-item nav-link active">Shop</a>
-                        <a href="#product" class="nav-item nav-link">Products</a>
-                        <a href="#footer" class="nav-item nav-link">Contact</a>
-                        <th:block th:if="${user != null}">
-                        <a href="customerOrders" class="nav-item nav-link" th:if="${user.role_id == 1}">My Orders</a>
-                        <a href="admin" class="nav-item nav-link" th:if="${user.role_id == 0}">Shop Manager</a>
-                        </th:block>
-                    </div>
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="login" class="nav-item nav-link" th:if="${session.user == null}">Login</a>
-                        <a href="register" class="nav-item nav-link" th:if="${session.user == null}">Register</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-</div>
-<!-- Navbar End -->
+<!--&lt;!&ndash; Topbar Start &ndash;&gt;-->
+<!--<div class="container-fluid">-->
+<!--    <div class="row bg-secondary py-2 px-xl-5">-->
+<!--        <div class="col-lg-6 d-none d-lg-block">-->
+<!--            <div class="d-inline-flex align-items-center">-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--                <a class="text-dark" href="#">HE1xxxxx</a>-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--                <a class="text-dark" href="#">Nguyễn Văn A</a>-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-6 text-center text-lg-right">-->
+<!--            <div th:if="${session.fullname != null}">-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--                <span class="text-dark" th:text="'Welcome: ' + ${session.fullname}"></span>-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--                <a class="text-dark" href="logout">Logout</a>-->
+<!--                <span class="text-muted px-2">|</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row align-items-center py-3 px-xl-5">-->
+<!--        <div class="col-lg-3 d-none d-lg-block">-->
+<!--            <a href="customer" class="text-decoration-none">-->
+<!--                <h1 class="m-0 display-5 font-weight-semi-bold">-->
+<!--                    <span class="text-primary font-weight-bold border px-3 mr-1">V</span>Shopper-->
+<!--                </h1>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-lg-6 col-6 text-left">-->
+<!--            <th:block th:if="${user != null}">-->
+<!--                <form action="customer" id="searchByName" th:if="${user.role.getId() != 0}">-->
+<!--                    <input type="hidden" name="service" value="searchByKeywords"/>-->
+<!--                    <div class="input-group">-->
+<!--                        <input-->
+<!--                                type="text"-->
+<!--                                class="form-control"-->
+<!--                                placeholder="Search for products"-->
+<!--                                name="keywords"-->
+<!--                                th:value="${keywords}"-->
+<!--                        />-->
+<!--                        <div class="input-group-append">-->
+<!--                            <button class="search-button btn btn-primary" type="submit">-->
+<!--                                <i class="fa fa-search"></i>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </th:block>-->
+<!--        </div>-->
+<!--        <th:block th:if="${user != null}">-->
+<!--            <div class="col-lg-3 col-6 text-right" th:if="${user.role.getId() == 1}">-->
+<!--                <a href="cart?service=showCart" class="btn border">-->
+<!--                    <i class="fas fa-shopping-cart text-primary"></i>-->
+<!--                    <span class='badge badge-warning' id='lblCartCount'-->
+<!--                          th:text="${session.numberProductsInCart}"></span>-->
+<!--                    <span class="badge">Show Cart</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </th:block>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Topbar End &ndash;&gt;-->
 
-<!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
-    <div
-            class="d-flex flex-column align-items-center justify-content-center"
-            style="min-height: 300px"
-    >
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">
-            Welcome to VShopper
-        </h1>
-        <div class="d-inline-flex">
-            <p class="m-0"><a href="">Home</a></p>
-            <p class="m-0 px-2">-</p>
-            <p class="m-0">Shop</p>
-        </div>
-    </div>
-</div>
-<!-- Page Header End -->
+<!--&lt;!&ndash; Navbar Start &ndash;&gt;-->
+<!--<div class="container-fluid">-->
+<!--    <div class="row border-top px-xl-5">-->
+<!--        <div class="col-lg-3 d-none d-lg-block">-->
+<!--            <a-->
+<!--                    class="btn shadow-none d-flex align-items-center justify-content-center bg-primary text-white w-100"-->
+<!--                    data-toggle="collapse"-->
+<!--                    href="#navbar-vertical"-->
+<!--                    style="height: 65px; margin-top: -1px; padding: 0 30px"-->
+<!--            >-->
+<!--                <h6 class="m-0">Laptop World</h6>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-lg-9">-->
+<!--            <nav-->
+<!--                    class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0"-->
+<!--            >-->
+<!--                <a href="" class="text-decoration-none d-block d-lg-none">-->
+<!--                    <h1 class="m-0 display-5 font-weight-semi-bold">-->
+<!--                        <span class="text-primary font-weight-bold border px-3 mr-1">V</span>Shopper-->
+<!--                    </h1>-->
+<!--                </a>-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="navbar-toggler"-->
+<!--                        data-toggle="collapse"-->
+<!--                        data-target="#navbarCollapse"-->
+<!--                >-->
+<!--                    <span class="navbar-toggler-icon"></span>-->
+<!--                </button>-->
+<!--                <div-->
+<!--                        class="collapse navbar-collapse justify-content-between"-->
+<!--                        id="navbarCollapse"-->
+<!--                >-->
+<!--                    <div class="navbar-nav mr-auto py-0">-->
+<!--                        <a href="customer" class="nav-item nav-link active">Shop</a>-->
+<!--                        <a href="#product" class="nav-item nav-link">Products</a>-->
+<!--                        <a href="#footer" class="nav-item nav-link">Contact</a>-->
+<!--                        <th:block th:if="${user != null}">-->
+<!--                            <a href="customerOrders" class="nav-item nav-link" th:if="${user.role.getId() == 1}">My-->
+<!--                                Orders</a>-->
+<!--                            <a href="admin" class="nav-item nav-link" th:if="${user.role.getId() == 0}">Shop Manager</a>-->
+<!--                        </th:block>-->
+<!--                    </div>-->
+<!--                    <div class="navbar-nav ml-auto py-0">-->
+<!--                        <a href="login" class="nav-item nav-link" th:if="${session.user == null}">Login</a>-->
+<!--                        <a href="register" class="nav-item nav-link" th:if="${session.user == null}">Register</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Navbar End &ndash;&gt;-->
+
+<!--&lt;!&ndash; Page Header Start &ndash;&gt;-->
+<!--<div class="container-fluid bg-secondary mb-5">-->
+<!--    <div-->
+<!--            class="d-flex flex-column align-items-center justify-content-center"-->
+<!--            style="min-height: 300px"-->
+<!--    >-->
+<!--        <h1 class="font-weight-semi-bold text-uppercase mb-3">-->
+<!--            Welcome to VShopper-->
+<!--        </h1>-->
+<!--        <div class="d-inline-flex">-->
+<!--            <p class="m-0"><a href="">Home</a></p>-->
+<!--            <p class="m-0 px-2">-</p>-->
+<!--            <p class="m-0">Shop</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Page Header End &ndash;&gt;-->
 
 <!-- Shop Start -->
-<div class="container-fluid pt-5">
-    <div class="row px-xl-5">
-        <!-- Shop Sidebar Start -->
-        <div class="col-lg-3 col-md-12">
-            <!-- Price Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                <form>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="price"
-                                id="price-all"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByPrice == null or filterByPrice == 'price-all'}"
-                        />
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                    </div>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="price"
-                                id="price-500-750"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByPrice == 'price-500-750'}"
-                        />
-                        <label class="custom-control-label" for="price-500-750">$500 - $750</label>
-                    </div>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="price"
-                                id="price-750-1000"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByPrice == 'price-750-1000'}"
-                        />
-                        <label class="custom-control-label" for="price-750-1000">$750 - $1000</label>
-                    </div>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="price"
-                                id="price-1000-1500"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByPrice == 'price-1000-1500'}"
-                        />
-                        <label class="custom-control-label" for="price-1000-1500">$1000 - $1500</label>
-                    </div>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="price"
-                                id="price-1500up"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByPrice == 'price-1500up'}"
-                        />
-                        <label class="custom-control-label" for="price-1500up">$1500+</label>
-                    </div>
-                </form>
-            </div>
-            <!-- Price End -->
+<!--<div class="container-fluid pt-5">-->
+<!--    <div class="row px-xl-5">-->
+<!--        &lt;!&ndash; Shop Sidebar Start &ndash;&gt;-->
+<!--        <div class="col-lg-3 col-md-12">-->
+<!--            &lt;!&ndash; Price Start &ndash;&gt;-->
+<!--            <div class="border-bottom mb-4 pb-4">-->
+<!--                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>-->
+<!--                <form>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="price"-->
+<!--                                id="price-all"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByPrice == null or filterByPrice == 'price-all'}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="price-all">All Price</label>-->
+<!--                    </div>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="price"-->
+<!--                                id="price-500-750"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByPrice == 'price-500-750'}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="price-500-750">$500 - $750</label>-->
+<!--                    </div>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="price"-->
+<!--                                id="price-750-1000"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByPrice == 'price-750-1000'}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="price-750-1000">$750 - $1000</label>-->
+<!--                    </div>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="price"-->
+<!--                                id="price-1000-1500"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByPrice == 'price-1000-1500'}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="price-1000-1500">$1000 - $1500</label>-->
+<!--                    </div>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="price"-->
+<!--                                id="price-1500up"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByPrice == 'price-1500up'}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="price-1500up">$1500+</label>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Price End &ndash;&gt;-->
 
-            <!-- Brand Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by brand</h5>
-                <form>
-                    <div
-                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="brand"
-                                id="brand-all"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByBrand == 'brand-all' or filterByBrand == null}"
-                        />
-                        <label class="custom-control-label" for="brand-all">All</label>
-                    </div>
-                    <div th:each="b : ${allBrands}"
-                         class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
-                    >
-                        <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                name="brand"
-                                th:id="'brand-' + ${b.id}"
-                                onchange="filter(this.id)"
-                                th:checked="${filterByBrand == 'brand-' + b.id}"
-                        />
-                        <label class="custom-control-label" th:for="'brand-' + ${b.id}" th:text="${b.name}"></label>
-                    </div>
-                </form>
-            </div>
-            <!-- Brand End -->
-        </div>
-        <!-- Shop Sidebar End -->
+<!--            &lt;!&ndash; Brand Start &ndash;&gt;-->
+<!--            <div class="border-bottom mb-4 pb-4">-->
+<!--                <h5 class="font-weight-semi-bold mb-4">Filter by brand</h5>-->
+<!--                <form>-->
+<!--                    <div-->
+<!--                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="brand"-->
+<!--                                id="brand-all"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByBrand == 'brand-all' or filterByBrand == null}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" for="brand-all">All</label>-->
+<!--                    </div>-->
+<!--                    <div th:each="b : ${allBrands}"-->
+<!--                         class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"-->
+<!--                    >-->
+<!--                        <input-->
+<!--                                type="checkbox"-->
+<!--                                class="custom-control-input"-->
+<!--                                name="brand"-->
+<!--                                th:id="'brand-' + ${b.id}"-->
+<!--                                onchange="filter(this.id)"-->
+<!--                                th:checked="${filterByBrand == 'brand-' + b.id}"-->
+<!--                        />-->
+<!--                        <label class="custom-control-label" th:for="'brand-' + ${b.id}" th:text="${b.name}"></label>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Brand End &ndash;&gt;-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Shop Sidebar End &ndash;&gt;-->
 
-        <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-12">
-            <div class="row pb-3">
-                <div class="col-12 pb-1">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="customer" >
-                            <input type="hidden" name="service" value="searchByKeywords"/>
-                            <div class="input-group">
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Search by name"
-                                        name="keywords"
-                                        th:value="${keywords}"
-                                />
-                                <div class="input-group-append">
-                                    <button class="search-button btn btn-primary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+<!--        &lt;!&ndash; Shop Product Start &ndash;&gt;-->
+<!--        <div class="col-lg-9 col-md-12">-->
+<!--            <div class="row pb-3">-->
+<!--                <div class="col-12 pb-1">-->
+<!--                    <div class="d-flex align-items-center justify-content-between mb-4">-->
+<!--                        <form action="customer">-->
+<!--                            <input type="hidden" name="service" value="searchByKeywords"/>-->
+<!--                            <div class="input-group">-->
+<!--                                <input-->
+<!--                                        type="text"-->
+<!--                                        class="form-control"-->
+<!--                                        placeholder="Search by name"-->
+<!--                                        name="keywords"-->
+<!--                                        th:value="${keywords}"-->
+<!--                                />-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <button class="search-button btn btn-primary" type="submit">-->
+<!--                                        <i class="fa fa-search"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
 
-                        <!--Sort product-->
-                        <div class="sort-options ml-4">
-                            <label for="sortSelect">Sort by:</label>
-                            <select id="sortSelect"   onchange="sortProducts(this.value)" name="sortBy">
-                                <option value="unsorted" th:selected="${sortBy == 'unsorted'}">Sort by...</option>
-                                <option value="latest" th:selected="${sortBy == 'latest'}">Latest</option>
-                                <option value="priceLowHigh" th:selected="${sortBy == 'priceLowHigh'}">Price: Low to High</option>
-                                <option value="priceHighLow" th:selected="${sortBy == 'priceHighLow'}">Price: High to Low</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+<!--                        &lt;!&ndash;Sort product&ndash;&gt;-->
+<!--                        <div class="sort-options ml-4">-->
+<!--                            <label for="sortSelect">Sort by:</label>-->
+<!--                            <select id="sortSelect" onchange="sortProducts(this.value)" name="sortBy">-->
+<!--                                <option value="unsorted" th:selected="${sortBy == 'unsorted'}">Sort by...</option>-->
+<!--                                <option value="latest" th:selected="${sortBy == 'latest'}">Latest</option>-->
+<!--                                <option value="priceLowHigh" th:selected="${sortBy == 'priceLowHigh'}">Price: Low to-->
+<!--                                    High-->
+<!--                                </option>-->
+<!--                                <option value="priceHighLow" th:selected="${sortBy == 'priceHighLow'}">Price: High to-->
+<!--                                    Low-->
+<!--                                </option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!-- Product here -->
-                <div th:each="p : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" th:src=" ${p.imageUrl}" alt="" style="height: 220px"/>
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="mb-3" th:text="${p.name}"></h6>
-                            <div class="d-flex justify-content-center">
-                                <h6 th:text="'$ ' + ${p.price}"></h6>
-                                <h6 class="text-muted ml-2"><del th:text="'$ ' + ${#numbers.formatDecimal(p.price * 1.25, 0, 'COMMA', 2, 'POINT')}"></del></h6>
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a th:href="@{/cart(service='addToCart', productId=${p.id})}" class="btn btn-sm text-dark p-0">
-                                <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Shop Product End -->
-    </div>
-</div>
-<!-- Shop End -->
-
-<!-- Footer Start -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5" id="footer">
-    <div class="row px-xl-5 pt-5">
-        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-            <a href="" class="text-decoration-none">
-                <h1 class="mb-4 display-5 font-weight-semi-bold">
-                    <span class="text-primary font-weight-bold border border-white px-3 mr-1">V</span>Shopper
-                </h1>
-            </a>
-            <p>
-                Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no
-                sit erat lorem et magna ipsum dolore amet erat.
-            </p>
-            <p class="mb-2">
-                <i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street,
-                New York, USA
-            </p>
-            <p class="mb-2">
-                <i class="fa fa-envelope text-primary mr-3"></i>info@example.com
-            </p>
-            <p class="mb-0">
-                <i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890
-            </p>
-        </div>
-        <div class="col-lg-8 col-md-12">
-            <div class="row">
-                <div class="col-md-6 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href="shop.html">
-                            <i class="fa fa-angle-right mr-2"></i>Shop
-                        </a>
-                        <a class="text-dark mb-2" href="cart.html">
-                            <i class="fa fa-angle-right mr-2"></i>Shopping Cart
-                        </a>
-                        <a class="text-dark mb-2" href="checkout.html">
-                            <i class="fa fa-angle-right mr-2"></i>Checkout
-                        </a>
-                        <a class="text-dark" href="#footer">
-                            <i class="fa fa-angle-right mr-2"></i>Contact Us
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-                    <form action="">
-                        <div class="form-group">
-                            <input
-                                    type="text"
-                                    class="form-control border-0 py-4"
-                                    placeholder="Your Name"
-                                    required="required"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <input
-                                    type="email"
-                                    class="form-control border-0 py-4"
-                                    placeholder="Your Email"
-                                    required="required"
-                            />
-                        </div>
-                        <div>
-                            <button
-                                    class="btn btn-primary btn-block border-0 py-3"
-                                    type="submit"
-                            >
-                                Subscribe Now
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row border-top border-light mx-xl-5 py-4">
-        <div class="col-md-6 px-xl-0">
-            <p class="mb-md-0 text-center text-md-left text-dark">
-                &copy;
-                <a class="text-dark font-weight-semi-bold" href="#">VShopper</a>.
-                All Rights Reserved.
-                Designed by
-                <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">Enric Van</a>
-            </p>
-        </div>
-        <div class="col-md-6 px-xl-0 text-center text-md-right">
-            <img class="img-fluid" src="img/payments.png" alt="" />
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
+<!--                &lt;!&ndash; Product card example &ndash;&gt;-->
+<!--                <div th:each="product : ${allProducts}" class="col-lg-4 col-md-6 col-sm-12 pb-1">-->
+<!--                    <div class="card product-item border-0 mb-4">-->
+<!--                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">-->
+<!--                            <img class="img-fluid w-100" th:src="${product.imageUrl}" alt="" style="height: 220px"/>-->
+<!--                        </div>-->
+<!--                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">-->
+<!--                            <h6 class="text-uppercase mb-3" th:text="${product.name}"></h6>-->
+<!--                            <div class="d-flex justify-content-center">-->
+<!--                                <h6 th:text="'$' + ${product.price}"></h6>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer d-flex justify-content-center bg-light border">-->
+<!--                            &lt;!&ndash; Add to Cart Button &ndash;&gt;-->
+<!--                            <form th:action="@{/cart/add}" method="post" style="display: inline;">-->
+<!--                                <input type="hidden" name="productId" th:value="${product.id}"/>-->
+<!--                                <button type="submit" class="btn btn-sm btn-primary">-->
+<!--                                    <i class="fas fa-shopping-cart text-light mr-1"></i> Thêm vào giỏ-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; Shop Product End &ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; Shop End &ndash;&gt;-->
+<!-- Footer -->
+<div th:insert="fragments/footer :: footer"></div>
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -495,13 +429,11 @@
     });
 
     function filter(id) {
-        // Implement your filter logic here
-        console.log("Filter applied:", id);
+        window.location.href = [[@{/customer}]] + '?service=filter&' + id + '=true';
     }
 
     function sortProducts(value) {
-        // Implement your sorting logic here
-        console.log("Sort applied:", value);
+        window.location.href = [[@{/customer}]] + '?service=sort&sortBy=' + value;
     }
 </script>
 </body>

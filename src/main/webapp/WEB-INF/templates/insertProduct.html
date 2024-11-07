@@ -4,10 +4,78 @@
     <meta charset="UTF-8">
     <title>Insert Product</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #e9ecef; /* Softer background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            background-color: #ffffff; /* White background */
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+            padding: 40px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333333; /* Darker text color */
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Spacing between form fields */
+        }
+
+        .form-group label {
+            color: #444444; /* Slightly darker gray */
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc; /* Light gray border */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            padding: 10px;
+        }
+
+        .form-control:focus {
+            border-color: #0056b3; /* Blue border */
+            box-shadow: 0 0 10px rgba(0, 86, 179, 0.25);
+        }
+
+        button.btn-primary {
+            background-color: #4a90e2; /* Lighter blue for better visibility */
+            border-color: #4a90e2;
+            color: #ffffff; /* White text */
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            width: 100%; /* Full-width button */
+        }
+
+        button.btn-primary:hover {
+            background-color: #357ab7; /* Slightly darker blue on hover */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical; /* Allow vertical resizing */
+        }
+    </style>
 </head>
+
 <body>
 <div class="container">
-    <h1 class="text-center mt-5">Insert a New Product</h1>
+    <h1 class="text-center">Insert a New Product</h1>
 
     <!-- Insert Product Form -->
     <form th:action="@{/manageProduct/sendInsertDetail}" method="get" class="mt-4">
