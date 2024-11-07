@@ -3,7 +3,9 @@ package com.onlineshop.controller;
 
 import com.onlineshop.entity.BillDetail;
 import com.onlineshop.entity.BillDetailForAdmin;
+import com.onlineshop.entity.User;
 import com.onlineshop.service.BillService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,14 @@ public class ManageBillController {
 
     // List All Bills
     @GetMapping("/listAllBills")
-    public String listAllBills(Model model) {
+    public String listAllBills(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
         List<BillDetailForAdmin> billDetailForAdmins = billService.showBillDetailForAdmin();
         model.addAttribute("billDetailForAdmins", billDetailForAdmins);
         model.addAttribute("manageBill", "Yes");
+        if(user.getRole().getId()==1){
+            return "redirect:/customer";
+        }
         return "BillManager";
     }
 
