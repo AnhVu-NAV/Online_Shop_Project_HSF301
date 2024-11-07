@@ -8,6 +8,6 @@ public class LogoutController {
     public String logout(HttpSession session) {
         session.removeAttribute("user");
         session.removeAttribute("fullname");
-        return "redirect:/customer";
+        return "redirect:/login";
     }
 }
